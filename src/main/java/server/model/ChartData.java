@@ -1,5 +1,6 @@
 package server.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,25 @@ public class ChartData {
 	 * CSVレコードのリスト。
 	 */
 	public List<String> list;
+
+	/**
+	 * コンストラクタ。
+	 * 
+	 * @param code 銘柄コード。
+	 */
+	public ChartData(String code) {
+		this.code = code;
+		this.list = new ArrayList<>();
+	}
+
+	/**
+	 * レコードを追加する。
+	 * 
+	 * @param line レコード文字列。
+	 */
+	public void addRecord(String line) {
+		list.add(line);
+	}
 
 	@Override
 	public String toString() {

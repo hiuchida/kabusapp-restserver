@@ -1,7 +1,6 @@
 package test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,12 +17,10 @@ public class MainTestClient {
 	}
 
 	private static ChartData testData() {
-		ChartData cd = new ChartData();
-		cd.code = "123";
-		cd.list = new ArrayList<>();
-		cd.list.add("a");
-		cd.list.add("b");
-		cd.list.add("c");
+		ChartData cd = new ChartData("123");
+		cd.addRecord("a");
+		cd.addRecord("b");
+		cd.addRecord("c");
 		return cd;
 	}
 
