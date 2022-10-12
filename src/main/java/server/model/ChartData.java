@@ -34,6 +34,17 @@ public class ChartData {
 	}
 
 	/**
+	 * コンストラクタ。
+	 * 
+	 * @param code  銘柄コード。
+	 * @param lines CSVレコードのリスト。
+	 */
+	public ChartData(String code, List<String> lines) {
+		this.code = code;
+		this.list = lines;
+	}
+
+	/**
 	 * レコードを追加する。
 	 * 
 	 * @param line レコード文字列。
