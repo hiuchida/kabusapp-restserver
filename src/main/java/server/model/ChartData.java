@@ -37,7 +37,7 @@ public class ChartData {
 
 	@Override
 	public String toString() {
-		return "ChartDataInfo [code=" + code + ", list=" + list + "]";
+		return "ChartData [code=" + code + ", list=" + list + "]";
 	}
 
 }
