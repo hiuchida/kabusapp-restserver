@@ -40,7 +40,9 @@ public class HttpUtil {
 			try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
 				StatusLine status = response.getStatusLine();
 				ret = status.toString();
-				write(System.out, response);
+				if (status.getStatusCode() != 200) {
+					write(System.out, response);
+				}
 			} finally {
 			}
 		} finally {
