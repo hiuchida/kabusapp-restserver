@@ -9,11 +9,15 @@ import server.model.ChartData;
 import util.HttpUtil;
 
 public class MainTestClient {
+	/**
+	 * ChartData APIのURI。
+	 */
+	public static final String CHARTDATA_URI = "http://localhost:8080/chartData/r1";
 
 	public static void main(String[] args) throws IOException {
 		ChartData cd = testData();
 		String data = jsonData(cd);
-		HttpUtil.postJson("http://localhost:8080/chartData/r1", data);
+		HttpUtil.postJson(CHARTDATA_URI, data);
 	}
 
 	private static ChartData testData() {
