@@ -30,7 +30,7 @@ public class ChartDataService {
 		try {
 			int writeCnt = chartDataRepository.append(cd);
 			int totalCnt = chartDataRepository.count(cd.code);
-			StdoutLog.timeprintln(clazz, "register()", "writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
+			StdoutLog.timeprintln(clazz, "register(" + cd.code + ")", "writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
 			return "OK" + "-" + writeCnt + "/" + totalCnt;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -48,7 +48,7 @@ public class ChartDataService {
 		try {
 			int writeCnt = chartDataRepository.update(cd);
 			int totalCnt = chartDataRepository.count(cd.code);
-			StdoutLog.timeprintln(clazz, "register()", "writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
+			StdoutLog.timeprintln(clazz, "update(" + cd.code + ")", "writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
 			return "OK" + "-" + writeCnt + "/" + totalCnt;
 		} catch (IOException e) {
 			e.printStackTrace();
