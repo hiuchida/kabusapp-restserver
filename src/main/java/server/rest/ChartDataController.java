@@ -19,6 +19,13 @@ public class ChartDataController {
 	@Autowired
 	private ChartDataService chartDataService;
 
+	@PostMapping("/r2")
+	@ResponseBody
+	public String postChartData_r2(@RequestBody ChartData cd) {
+		String resp = chartDataService.update(cd);
+		return resp;
+	}
+
 	@PostMapping("/r1")
 	@ResponseBody
 	public String postChartData_r1(@RequestBody ChartData cd) {
