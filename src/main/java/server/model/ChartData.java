@@ -18,6 +18,13 @@ public class ChartData {
 
 	/**
 	 * コンストラクタ。
+	 */
+	public ChartData() {
+		this.list = new ArrayList<>();
+	}
+
+	/**
+	 * コンストラクタ。
 	 * 
 	 * @param code 銘柄コード。
 	 */
