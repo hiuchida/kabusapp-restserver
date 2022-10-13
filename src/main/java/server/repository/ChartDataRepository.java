@@ -108,7 +108,7 @@ public class ChartDataRepository {
 		List<String> lines = FileUtil.readAllLines(filepath);
 		cdl = new ChartDataLogic(code, lines);
 		chartMap.put(code, cdl);
-		StdoutLog.timeprintln(clazz, "loadChartData()", "lines.size=" + lines.size());
+		StdoutLog.timeprintln(clazz, "loadChartData(" + code + ")", "lines.size=" + lines.size());
 		return cdl;
 	}
 
