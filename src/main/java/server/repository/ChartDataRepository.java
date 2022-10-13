@@ -97,7 +97,7 @@ public class ChartDataRepository {
 	 * チャートデータをロードする。
 	 * 
 	 * @param code 銘柄コード。
-	 * @return チャートデータを管理する。
+	 * @return チャートデータを管理するクラス。
 	 */
 	private synchronized ChartDataLogic loadChartData(String code) {
 		ChartDataLogic cdl = chartMap.get(code);
