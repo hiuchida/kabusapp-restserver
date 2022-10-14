@@ -53,4 +53,22 @@ public class StdoutLog {
 		System.out.println(now + " " + name + "." + method + ": " + msg);
 	}
 
+	/**
+	 * タイムスタンプとスレッドIDをつけて、ログ出力する（改行あり）。
+	 * 
+	 * @param clazz  実行クラス。
+	 * @param method メソッド名。
+	 * @param msg    メッセージ文字列。
+	 */
+	public static void timethreadprintln(Class<?> clazz, String method, String msg) {
+		String now = DateTimeUtil.nowToString();
+		long threadid = Thread.currentThread().getId();
+		String name = clazz.getName();
+		int idx = name.lastIndexOf(".");
+		if (idx >= 0) {
+			name = name.substring(idx + 1);
+		}
+		System.out.println(now + " [" + threadid + "] " + name + "." + method + ": " + msg);
+	}
+
 }
