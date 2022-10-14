@@ -24,4 +24,9 @@ public class RepositoryService {
 		return sb.toString();
 	}
 
+	public void load() {
+		chartDataRepository.load();
+		chartDbRepository.load();
+	}
+
 }

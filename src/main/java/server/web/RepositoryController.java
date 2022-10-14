@@ -19,4 +19,10 @@ public class RepositoryController {
 		return this.repositoryService.list();
 	}
 
+	@RequestMapping("/repo/load")
+	@ResponseBody
+	public void load() {
+		this.repositoryService.load();
+	}
+
 }

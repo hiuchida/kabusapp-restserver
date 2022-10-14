@@ -23,6 +23,42 @@ public class FileUtil {
 	public static final String UTF8 = "UTF-8";
 
 	/**
+	 * 指定したディレクトリ直下のディレクトリ名のリストを取得する。
+	 * 
+	 * @param dirpath 対象のディレクトリパス。
+	 * @return ディレクトリ名のリスト。
+	 */
+	public static List<String> listDirs(String dirpath) {
+		List<String> list = new ArrayList<>();
+		File dir = new File(dirpath);
+		for (File f : dir.listFiles()) {
+			if (f.isFile()) {
+				continue;
+			}
+			list.add(f.getName());
+		}
+		return list;
+	}
+
+	/**
+	 * 指定したディレクトリ直下のファイル名のリストを取得する。
+	 * 
+	 * @param dirpath 対象のディレクトリパス。
+	 * @return ファイル名のリスト。
+	 */
+	public static List<String> listFiles(String dirpath) {
+		List<String> list = new ArrayList<>();
+		File dir = new File(dirpath);
+		for (File f : dir.listFiles()) {
+			if (f.isDirectory()) {
+				continue;
+			}
+			list.add(f.getName());
+		}
+		return list;
+	}
+
+	/**
 	 * ディレクトリを作成する。
 	 * 
 	 * @param dirpath ディレクトリパス。

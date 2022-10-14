@@ -57,6 +57,21 @@ public class ChartDbRepository {
 	}
 
 	/**
+	 * すべてのファイルをロードする。
+	 */
+	public void load() {
+		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		StdoutLog.timeprintln(clazz, "load()", "" + dirs);
+		for (String code : dirs) {
+			List<String> files = FileUtil.listFiles(DIRPATH + code);
+			StdoutLog.timeprintln(clazz, "load(" + code + ")", "" + files);
+			for (String name : files) {
+				loadChartDb(code, name);
+			}
+		}
+	}
+
+	/**
 	 * チャートDBをファイルに上書き保存する。
 	 * 
 	 * @param cd チャートDB。

@@ -60,6 +60,17 @@ public class ChartDataRepository {
 	}
 
 	/**
+	 * すべてのファイルをロードする。
+	 */
+	public synchronized void load() {
+		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		StdoutLog.timeprintln(clazz, "load()", "" + dirs);
+		for (String code : dirs) {
+			loadChartData(code);
+		}
+	}
+
+	/**
 	 * チャートデータをファイルに追記する。
 	 * 
 	 * @param cd チャートデータ。
