@@ -31,19 +31,6 @@ public class ChartDbLogic {
 	 * 
 	 * @param code     銘柄コード。
 	 * @param filename ファイル名。
-	 */
-	public ChartDbLogic(String code, String filename) {
-		this.code = code;
-		this.filename = filename;
-		this.chartList = new ArrayList<>();
-		this.chartSet = new HashSet<>();
-	}
-
-	/**
-	 * コンストラクタ。
-	 * 
-	 * @param code     銘柄コード。
-	 * @param filename ファイル名。
 	 * @param lines    CSVレコードのリスト。
 	 */
 	public ChartDbLogic(String code, String filename, List<String> lines) {

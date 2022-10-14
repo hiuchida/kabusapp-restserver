@@ -46,6 +46,20 @@ public class ChartDataRepository {
 	}
 
 	/**
+	 * チャートデータの一覧を取得する。
+	 * 
+	 * @return チャートデータの一覧。
+	 */
+	public synchronized String list() {
+		StringBuilder sb = new StringBuilder();
+		for (String key : chartMap.keySet()) {
+			ChartDataLogic cdl = chartMap.get(key);
+			sb.append(key).append(":").append(cdl.count()).append("\r\n");
+		}
+		return sb.toString();
+	}
+
+	/**
 	 * チャートデータをファイルに追記する。
 	 * 
 	 * @param cd チャートデータ。

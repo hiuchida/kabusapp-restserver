@@ -3,6 +3,7 @@ package server.repository;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -37,8 +38,22 @@ public class ChartDbRepository {
 	 * @return 件数。
 	 */
 	public synchronized int count(String code, String filename) {
-		ChartDbLogic cdl = getChartDb(code, filename);
+		ChartDbLogic cdl = loadChartDb(code, filename);
 		return cdl.count();
+	}
+
+	/**
+	 * チャートDBの一覧を取得する。
+	 * 
+	 * @return チャートDBの一覧。
+	 */
+	public synchronized String list() {
+		StringBuilder sb = new StringBuilder();
+		for (String key : chartMap.keySet()) {
+			ChartDbLogic cdl = chartMap.get(key);
+			sb.append(key).append(":").append(cdl.count()).append("\r\n");
+		}
+		return sb.toString();
 	}
 
 	/**
@@ -49,7 +64,7 @@ public class ChartDbRepository {
 	 * @throws IOException 
 	 */
 	public synchronized int write(ChartDb cd) throws IOException {
-		ChartDbLogic cdl = getChartDb(cd.code, cd.filename);
+		ChartDbLogic cdl = loadChartDb(cd.code, cd.filename);
 		cdl.clear();
 		String filepath;
 		if (cd.code.length() > 0) {
@@ -77,14 +92,23 @@ public class ChartDbRepository {
 	 * @param filename ファイル名。
 	 * @return チャートDBを管理するクラス。
 	 */
-	private synchronized ChartDbLogic getChartDb(String code, String filename) {
+	private synchronized ChartDbLogic loadChartDb(String code, String filename) {
 		String key = code + "/" + filename;
 		ChartDbLogic cdl = chartMap.get(key);
 		if (cdl != null) {
 			return cdl;
 		}
-		cdl = new ChartDbLogic(code, filename);
+		String filepath;
+		if (code.length() > 0) {
+			String dirpath = DIRPATH + code;
+			filepath = dirpath + "/" + filename;
+		} else {
+			filepath = DIRPATH + filename;
+		}
+		List<String> lines = FileUtil.readAllLines(filepath);
+		cdl = new ChartDbLogic(code, filename, lines);
 		chartMap.put(key, cdl);
+		StdoutLog.timeprintln(clazz, "loadChartDb(" + key + ")", "lines.size=" + lines.size());
 		return cdl;
 	}
 

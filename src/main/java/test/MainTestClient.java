@@ -13,14 +13,14 @@ public class MainTestClient {
 	/**
 	 * ChartData APIのURI。
 	 */
-	public static final String CHARTDATA_URI = "http://localhost:8080/chartData/r1";
+	public static final String CHARTDATA_URI = "http://localhost:8080/chartData/r2";
 	/**
 	 * ChartDb APIのURI。
 	 */
 	public static final String CHARTDB_URI = "http://localhost:8080/chartDb/r1";
 
 	public static void main(String[] args) throws IOException {
-//		ChartDataApi.execute();
+		ChartDataApi.execute();
 		ChartDbApi.execute();
 	}
 
