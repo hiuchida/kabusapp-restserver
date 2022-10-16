@@ -22,12 +22,18 @@ import javax.servlet.ServletContextListener;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
+import server.prop.KabusapisrvProperties;
+
 @SpringBootApplication
+@EnableAutoConfiguration
+@EnableConfigurationProperties({ KabusapisrvProperties.class })
 public class SampleTomcatApplication extends SpringBootServletInitializer {
 
 	private static Log logger = LogFactory.getLog(SampleTomcatApplication.class);
