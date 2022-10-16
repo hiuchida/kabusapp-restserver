@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
 import server.logic.ChartDataLogic;
 import server.model.ChartData;
 import util.FileUtil;
-import util.StdoutLog;
 
 @Repository
 public class ChartDataRepository {
@@ -20,6 +21,10 @@ public class ChartDataRepository {
 	 * クラス。
 	 */
 	private static Class<?> clazz = MethodHandles.lookup().lookupClass();
+	/**
+	 * ロガー。
+	 */
+	private static Log logger = LogFactory.getLog(clazz);
 	/**
 	 * 基準パス。
 	 */
@@ -64,7 +69,7 @@ public class ChartDataRepository {
 	 */
 	public synchronized void load() {
 		List<String> dirs = FileUtil.listDirs(DIRPATH);
-		StdoutLog.timeprintln(clazz, "load()", "" + dirs);
+		logger.info("load(): " + dirs);
 		for (String code : dirs) {
 			loadChartData(code);
 		}
@@ -133,7 +138,7 @@ public class ChartDataRepository {
 		List<String> lines = FileUtil.readAllLines(filepath);
 		cdl = new ChartDataLogic(code, lines);
 		chartMap.put(code, cdl);
-		StdoutLog.timeprintln(clazz, "loadChartData(" + code + ")", "lines.size=" + lines.size());
+		logger.info("loadChartData(" + code + "): lines.size=" + lines.size());
 		return cdl;
 	}
 

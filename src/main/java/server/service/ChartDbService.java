@@ -3,6 +3,8 @@ package server.service;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,10 @@ public class ChartDbService {
 	 * クラス。
 	 */
 	private static Class<?> clazz = MethodHandles.lookup().lookupClass();
+	/**
+	 * ロガー。
+	 */
+	private static Log logger = LogFactory.getLog(clazz);
 
 	@Autowired
 	private ChartDbRepository chartDbRepository;
@@ -30,6 +36,7 @@ public class ChartDbService {
 		try {
 			int writeCnt = chartDbRepository.write(cd);
 			int totalCnt = chartDbRepository.count(cd.code, cd.filename);
+			logger.info("register(" + cd.code + "/" + cd.filename + "): writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
 			StdoutLog.timeprintln(clazz, "register(" + cd.code + "/" + cd.filename + ")", "writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
 			return "OK" + "-" + writeCnt + "/" + totalCnt;
 		} catch (IOException e) {

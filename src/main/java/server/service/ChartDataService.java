@@ -3,6 +3,8 @@ package server.service;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,10 @@ public class ChartDataService {
 	 * クラス。
 	 */
 	private static Class<?> clazz = MethodHandles.lookup().lookupClass();
+	/**
+	 * ロガー。
+	 */
+	private static Log logger = LogFactory.getLog(clazz);
 
 	@Autowired
 	private ChartDataRepository chartDataRepository;
@@ -30,6 +36,7 @@ public class ChartDataService {
 		try {
 			int writeCnt = chartDataRepository.append(cd);
 			int totalCnt = chartDataRepository.count(cd.code);
+			logger.info("register(" + cd.code + "): writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
 			StdoutLog.timeprintln(clazz, "register(" + cd.code + ")", "writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
 			return "OK" + "-" + writeCnt + "/" + totalCnt;
 		} catch (IOException e) {
@@ -48,6 +55,7 @@ public class ChartDataService {
 		try {
 			int writeCnt = chartDataRepository.update(cd);
 			int totalCnt = chartDataRepository.count(cd.code);
+			logger.info("update(" + cd.code + "): writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
 			StdoutLog.timeprintln(clazz, "update(" + cd.code + ")", "writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
 			return "OK" + "-" + writeCnt + "/" + totalCnt;
 		} catch (IOException e) {

@@ -7,12 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
 import server.logic.ChartDbLogic;
 import server.model.ChartDb;
 import util.FileUtil;
-import util.StdoutLog;
 
 @Repository
 public class ChartDbRepository {
@@ -20,6 +21,10 @@ public class ChartDbRepository {
 	 * クラス。
 	 */
 	private static Class<?> clazz = MethodHandles.lookup().lookupClass();
+	/**
+	 * ロガー。
+	 */
+	private static Log logger = LogFactory.getLog(clazz);
 	/**
 	 * 基準パス。
 	 */
@@ -61,10 +66,10 @@ public class ChartDbRepository {
 	 */
 	public void load() {
 		List<String> dirs = FileUtil.listDirs(DIRPATH);
-		StdoutLog.timeprintln(clazz, "load()", "" + dirs);
+		logger.info("load(): " + dirs);
 		for (String code : dirs) {
 			List<String> files = FileUtil.listFiles(DIRPATH + code);
-			StdoutLog.timeprintln(clazz, "load(" + code + ")", "" + files);
+			logger.info("load(" + code + "): " + files);
 			for (String name : files) {
 				loadChartDb(code, name);
 			}
@@ -123,7 +128,7 @@ public class ChartDbRepository {
 		List<String> lines = FileUtil.readAllLines(filepath);
 		cdl = new ChartDbLogic(code, filename, lines);
 		chartMap.put(key, cdl);
-		StdoutLog.timeprintln(clazz, "loadChartDb(" + key + ")", "lines.size=" + lines.size());
+		logger.info("loadChartDb(" + key + "): lines.size=" + lines.size());
 		return cdl;
 	}
 
