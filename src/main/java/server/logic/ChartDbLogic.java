@@ -50,6 +50,15 @@ public class ChartDbLogic {
 	}
 
 	/**
+	 * リストを取得する。
+	 * 
+	 * @return リスト。
+	 */
+	public List<String> list() {
+		return chartList;
+	}
+
+	/**
 	 * リストをクリアする。
 	 */
 	public void clear() {

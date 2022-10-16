@@ -3,14 +3,11 @@ package logic;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import util.CalendarUtil;
-import util.FileUtil;
 
 /**
  * 営業日を管理するクラス。
@@ -27,45 +24,61 @@ public class CalendarLogic {
 	/**
 	 * 基準パス。
 	 */
-	private static final String SERVER_DIRPATH = "/tmp/server/";
+//	private static final String SERVER_DIRPATH = "/tmp/server/";
 	/**
 	 * チャートＤＢディレクトリパス。
 	 */
-	private static final String SERVER_DIR_DBPATH = SERVER_DIRPATH + "db";
+//	private static final String SERVER_DIR_DBPATH = SERVER_DIRPATH + "db";
 	/**
 	 * チャートカレンダーファイル名。
 	 */
-	private static final String DB_FILENAME = "ChartCalendar.db";
+	public static final String DB_FILENAME = "ChartCalendar.db";
 	/**
 	 * チャートカレンダーファイルパス。存在しなければ生成される。
 	 */
-	private static final String DB_FILEPATH = SERVER_DIR_DBPATH + "/" + DB_FILENAME;
+//	private static final String DB_FILEPATH = SERVER_DIR_DBPATH + "/" + DB_FILENAME;
 
 	/**
 	 * チャートカレンダーのリスト。
 	 */
 	private static List<String> calendarList;
 
-	static {
-		readCalendar();
+//	static {
+//		readCalendar();
+//	}
+
+	/**
+	 * チャートカレンダーを初期化する。
+	 * 
+	 * @param lines チャートカレンダーのリスト。
+	 */
+	public static void initCalendar(List<String> lines) {
+		calendarList = new ArrayList<>();
+		for (String s : lines) {
+			if (s.startsWith("#")) {
+				continue;
+			}
+			calendarList.add(s);
+		}
+		logger.info("initCalendar(): calendarList.size=" + calendarList.size());
 	}
 
 	/**
 	 * チャートカレンダーファイルを読み込む。
 	 */
-	private static void readCalendar() {
-		Set<String> calendarSet = new TreeSet<>();
-		List<String> lines = FileUtil.readAllLines(DB_FILEPATH);
-		for (String s : lines) {
-			if (s.startsWith("#")) {
-				continue;
-			}
-			calendarSet.add(s);
-		}
-		logger.info("readCalendar(): calendarSet.size=" + calendarSet.size());
-		calendarList = new ArrayList<>();
-		calendarList.addAll(calendarSet);
-	}
+//	private static void readCalendar() {
+//		Set<String> calendarSet = new TreeSet<>();
+//		List<String> lines = FileUtil.readAllLines(DB_FILEPATH);
+//		for (String s : lines) {
+//			if (s.startsWith("#")) {
+//				continue;
+//			}
+//			calendarSet.add(s);
+//		}
+//		logger.info("readCalendar(): calendarSet.size=" + calendarSet.size());
+//		calendarList = new ArrayList<>();
+//		calendarList.addAll(calendarSet);
+//	}
 
 	/**
 	 * 前営業日の日付を検索する。

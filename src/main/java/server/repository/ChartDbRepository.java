@@ -3,6 +3,7 @@ package server.repository;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -11,6 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
+import logic.CalendarLogic;
 import server.logic.ChartDbLogic;
 import server.model.ChartDb;
 import util.FileUtil;
@@ -31,9 +33,27 @@ public class ChartDbRepository {
 	private static final String DIRPATH = "/tmp/server/db/";
 
 	/**
+	 * 初期化済フラグ。
+	 */
+	private boolean bInit = false;
+	/**
 	 * チャートDBを管理する。
 	 */
 	private Map<String, ChartDbLogic> chartMap = new TreeMap<>();
+
+	/**
+	 * 「銘柄コードとファイル名」のリストを取得する。
+	 * 
+	 * @return 「銘柄コードとファイル名」のリスト。
+	 */
+	public synchronized List<String> list() {
+		if (!bInit) {
+			load();
+			bInit = true;
+		}
+		List<String> codes = new ArrayList<>(chartMap.keySet());
+		return codes;
+	}
 
 	/**
 	 * 件数を取得する。
@@ -64,7 +84,12 @@ public class ChartDbRepository {
 	/**
 	 * すべてのファイルをロードする。
 	 */
-	public void load() {
+	public synchronized void load() {
+		{
+			ChartDbLogic cdl = loadChartDb("", CalendarLogic.DB_FILENAME);
+			List<String> lines = cdl.list();
+			CalendarLogic.initCalendar(lines);
+		}
 		List<String> dirs = FileUtil.listDirs(DIRPATH);
 		logger.info("load(): " + dirs);
 		for (String code : dirs) {
@@ -100,6 +125,9 @@ public class ChartDbRepository {
 				cdl.append(s);
 				pw.println(s);
 				writeCnt++;
+			}
+			if (cd.code.length() == 0 && cd.filename.equals(CalendarLogic.DB_FILENAME)) {
+				CalendarLogic.initCalendar(cdl.list());
 			}
 			return writeCnt;
 		}
