@@ -12,9 +12,9 @@
   </appender>
   
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>log/kabussrv.log</file>
+    <file>log/kabusapisrv.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>log/kabussrv-%d{yyyyMMdd}.log</fileNamePattern>
+      <fileNamePattern>log/kabusapisrv-%d{yyyyMMdd}.log</fileNamePattern>
       <!-- maxHistory>30</maxHistory -->
     </rollingPolicy>
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
