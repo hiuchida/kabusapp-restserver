@@ -3,6 +3,8 @@ package v38.i;
 import java.util.List;
 import java.util.Map;
 
+import server.repository.ChartDataRepository;
+import server.repository.ChartDbRepository;
 import v38.bean.MergeChartInfo_r10;
 import v38.factory.BarCode;
 
@@ -19,13 +21,18 @@ public interface MergeChartData_r10 {
 
 	/**
 	 * 保存した4本値チャートデータの終値と、PUSH APIで受信したチャートデータをマージする。
+	 * 
+	 * @param chartDataRepository
+	 * @param chartDbRepository
 	 */
-	public void execute();
+	public void execute(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository);
 
 	/**
 	 * 1分足の4本値チャートＤＢファイルから終値を読み込む。
+	 * 
+	 * @param chartDbRepository
 	 */
-	public void readDbChartData();
+	public void readDbChartData(ChartDbRepository chartDbRepository);
 
 	/**
 	 * PUSH APIで受信したチャートデータファイルから現値を読み込む。

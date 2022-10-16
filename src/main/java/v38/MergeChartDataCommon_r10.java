@@ -12,6 +12,8 @@ import org.apache.commons.logging.LogFactory;
 
 import logic.CalendarLogic;
 import logic.FileLockLogic;
+import server.repository.ChartDataRepository;
+import server.repository.ChartDbRepository;
 import util.DateTimeUtil;
 import util.DateUtil;
 import util.FileUtil;
@@ -70,9 +72,13 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 */
 	protected String bar;
 	/**
-	 * チャートＤＢファイルパス。
+	 * 銘柄コード。
 	 */
-	protected String dbFilePath;
+	protected String code;
+	/**
+	 * チャートＤＢファイル名。
+	 */
+	protected String dbFileName;
 	/**
 	 * マージしたチャートデータを時系列に並べたマップ。
 	 */
@@ -269,9 +275,8 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	public MergeChartDataCommon_r10(String name, String bar) {
 		this.name = name;
 		this.bar = bar;
-		String code = StringUtil.parseString(name, "_");
-		String dirDbPath = SERVER_DIR_DBPATH + code;
-		this.dbFilePath = dirDbPath + "/" + String.format(DB_FILENAME, bar);
+		this.code = StringUtil.parseString(name, "_");
+		this.dbFileName = String.format(DB_FILENAME, bar);
 		String dirChartPath = SERVER_DIR_CHARTPATH + name;
 		this.csvFilePath = dirChartPath + "/" + CHART_CSV_FILENAME;
 		this.txtFilePath = dirChartPath + "/" + String.format(CHART_TXT_FILENAME, bar);
@@ -280,9 +285,12 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 
 	/**
 	 * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージする。
+	 * 
+	 * @param chartDataRepository
+	 * @param chartDbRepository
 	 */
-	public void execute() {
-		readDbChartData();
+	public void execute(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository) {
+		readDbChartData(chartDbRepository);
 		List<String> lines = readCsvChartData();
 		mergeCsvChartData(lines);
 		writeChartMap();
@@ -290,9 +298,12 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 
 	/**
 	 * チャートＤＢファイルから4本値を読み込む。
+	 * 
+	 * @param chartDbRepository
 	 */
-	public void readDbChartData() {
-		List<String> lines = FileUtil.readAllLines(dbFilePath);
+	public void readDbChartData(ChartDbRepository chartDbRepository) {
+		List<String> lines = chartDbRepository.lines(code, dbFileName);
+//		List<String> lines = FileUtil.readAllLines(dbFilePath);
 		int readCnt = 0;
 		for (String s : lines) {
 			if (s.startsWith("#")) {
@@ -486,9 +497,9 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 
 	@Override
 	public String toString() {
-		return "MergeChartDataCommon_r10 [name=" + name + ", bar=" + bar + ", dbFilePath=" + dbFilePath + ", chartMap.size="
-				+ chartMap.size() + ", csvFilePath=" + csvFilePath + ", txtFilePath=" + txtFilePath + ", fileLockLogic="
-				+ fileLockLogic + "]";
+		return "MergeChartDataCommon_r10 [name=" + name + ", bar=" + bar + ", code=" + code + ", dbFileName="
+				+ dbFileName + ", chartMap.size=" + chartMap.size() + ", csvFilePath=" + csvFilePath + ", txtFilePath="
+				+ txtFilePath + ", fileLockLogic=" + fileLockLogic + "]";
 	}
 
 }

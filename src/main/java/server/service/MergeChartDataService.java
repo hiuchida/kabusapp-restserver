@@ -39,7 +39,7 @@ public class MergeChartDataService {
 		List<String> codes = chartDataRepository.list();
 		logger.info("execute(): " + codes);
 		for (String code : codes) {
-			new MainMergeChartData_r10(code).execute();
+			new MainMergeChartData_r10(chartDataRepository, chartDbRepository, code).execute();
 		}
 		return "OK";
 	}

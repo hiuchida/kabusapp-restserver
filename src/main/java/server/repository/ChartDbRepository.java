@@ -68,6 +68,18 @@ public class ChartDbRepository {
 	}
 
 	/**
+	 * チャートデータのリストを取得する。
+	 * 
+	 * @param code     銘柄コード。
+	 * @param filename ファイル名。
+	 * @return チャートデータのリスト。
+	 */
+	public synchronized List<String> lines(String code, String filename) {
+		ChartDbLogic cdl = loadChartDb(code, filename);
+		return cdl.list();
+	}
+
+	/**
 	 * チャートDBの一覧を取得する。
 	 * 
 	 * @return チャートDBの一覧。
