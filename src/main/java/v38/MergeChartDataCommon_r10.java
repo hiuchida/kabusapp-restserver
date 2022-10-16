@@ -11,7 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import logic.CalendarLogic;
-import logic.FileLockLogic;
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
 import util.DateTimeUtil;
@@ -39,10 +38,6 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 */
 	private static final String SERVER_DIRPATH = "/tmp/server/";
 	/**
-	 * チャートＤＢディレクトリパス。
-	 */
-	private static final String SERVER_DIR_DBPATH = SERVER_DIRPATH + "db/";
-	/**
 	 * 4本値チャートＤＢファイル名。
 	 */
 	private static final String DB_FILENAME = "ChartData%s_r10.db";
@@ -51,17 +46,9 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 */
 	private static final String SERVER_DIR_CHARTPATH = SERVER_DIRPATH + "chart/";
 	/**
-	 * PUSH APIで受信したチャートデータファイル名。
-	 */
-	private static final String CHART_CSV_FILENAME = "ChartData.csv";
-	/**
 	 * マージしたチャートデータファイル名。
 	 */
 	private static final String CHART_TXT_FILENAME = "ChartData%s_r10.txt";
-	/**
-	 * ファイルロック管理用0バイトのファイル名。存在しなければ生成される。
-	 */
-	private static final String LOCK_FILENAME = "ChartData.lock";
 
 	/**
 	 * ディレクトリ名。
@@ -84,17 +71,9 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 */
 	protected Map<String, MergeChartInfo_r10> chartMap = new TreeMap<>();
 	/**
-	 * チャートデータファイルパス。
-	 */
-	protected String csvFilePath;
-	/**
 	 * マージしたチャートデータファイルパス。
 	 */
 	protected String txtFilePath;
-	/**
-	 * チャートデータロックを管理する。
-	 */
-	private FileLockLogic fileLockLogic;
 
 	/**
 	 * 足名の種別コードを取得する。
@@ -278,9 +257,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 		this.code = StringUtil.parseString(name, "_");
 		this.dbFileName = String.format(DB_FILENAME, bar);
 		String dirChartPath = SERVER_DIR_CHARTPATH + name;
-		this.csvFilePath = dirChartPath + "/" + CHART_CSV_FILENAME;
 		this.txtFilePath = dirChartPath + "/" + String.format(CHART_TXT_FILENAME, bar);
-		this.fileLockLogic = new FileLockLogic(dirChartPath + "/" + LOCK_FILENAME);
 	}
 
 	/**
@@ -291,7 +268,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 */
 	public void execute(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository) {
 		readDbChartData(chartDbRepository);
-		List<String> lines = readCsvChartData();
+		List<String> lines = readCsvChartData(chartDataRepository);
 		mergeCsvChartData(lines);
 		writeChartMap();
 	}
@@ -325,13 +302,15 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	/**
 	 * PUSH APIで受信したチャートデータファイルから現値を読み込む。
 	 * 
+	 * @param chartDataRepository
 	 * @return チャートデータ。
 	 */
-	public List<String> readCsvChartData() {
-		fileLockLogic.lockFile();
+	public List<String> readCsvChartData(ChartDataRepository chartDataRepository) {
+//		fileLockLogic.lockFile();
 		try {
 			List<String> lines;
-			lines = FileUtil.readAllLines(csvFilePath);
+			lines = chartDataRepository.lines(name);
+//			lines = FileUtil.readAllLines(csvFilePath);
 			String prev = null;
 			for (int i = 0; i < lines.size(); i++) {
 				String s = lines.get(i);
@@ -355,7 +334,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 			logger.info("readCsvChartData(" + name + "_" + bar + "): readCnt=" + lines.size());
 			return lines;
 		} finally {
-			fileLockLogic.unlockFile();
+//			fileLockLogic.unlockFile();
 		}
 	}
 
@@ -498,8 +477,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	@Override
 	public String toString() {
 		return "MergeChartDataCommon_r10 [name=" + name + ", bar=" + bar + ", code=" + code + ", dbFileName="
-				+ dbFileName + ", chartMap.size=" + chartMap.size() + ", csvFilePath=" + csvFilePath + ", txtFilePath="
-				+ txtFilePath + ", fileLockLogic=" + fileLockLogic + "]";
+				+ dbFileName + ", chartMap.size=" + chartMap.size() + ", txtFilePath=" + txtFilePath + "]";
 	}
 
 }

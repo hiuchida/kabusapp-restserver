@@ -70,6 +70,18 @@ public class ChartDataRepository {
 	}
 
 	/**
+	 * チャートデータのリストを取得する。
+	 * 
+	 * @param code     銘柄コード。
+	 * @param filename ファイル名。
+	 * @return チャートデータのリスト。
+	 */
+	public synchronized List<String> lines(String code) {
+		ChartDataLogic cdl = loadChartData(code);
+		return cdl.list();
+	}
+
+	/**
 	 * チャートデータの一覧を取得する。
 	 * 
 	 * @return チャートデータの一覧。

@@ -37,9 +37,10 @@ public interface MergeChartData_r10 {
 	/**
 	 * PUSH APIで受信したチャートデータファイルから現値を読み込む。
 	 * 
+	 * @param chartDataRepository
 	 * @return チャートデータ。
 	 */
-	public List<String> readCsvChartData();
+	public List<String> readCsvChartData(ChartDataRepository chartDataRepository);
 
 	/**
 	 * 4本値チャートデータの終値と、PUSH APIで受信したチャートデータをマージする。

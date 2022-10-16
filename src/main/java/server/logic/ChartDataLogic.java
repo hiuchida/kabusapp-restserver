@@ -44,6 +44,15 @@ public class ChartDataLogic {
 	}
 
 	/**
+	 * リストを取得する。
+	 * 
+	 * @return リスト。
+	 */
+	public List<String> list() {
+		return chartList;
+	}
+
+	/**
 	 * 指定されたCSVレコードが存在するかチェックする。
 	 * 
 	 * @param s CSVレコード文字列。
