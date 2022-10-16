@@ -18,9 +18,9 @@ public class RepositoryService {
 	public String list() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("ChartDataRepository").append("\r\n");
-		sb.append(chartDataRepository.list()).append("\r\n");
+		sb.append(chartDataRepository.toString()).append("\r\n");
 		sb.append("ChartDbRepository").append("\r\n");
-		sb.append(chartDbRepository.list()).append("\r\n");
+		sb.append(chartDbRepository.toString()).append("\r\n");
 		return sb.toString();
 	}
 

@@ -52,7 +52,7 @@ public class ChartDbRepository {
 	 * 
 	 * @return チャートDBの一覧。
 	 */
-	public synchronized String list() {
+	public synchronized String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (String key : chartMap.keySet()) {
 			ChartDbLogic cdl = chartMap.get(key);

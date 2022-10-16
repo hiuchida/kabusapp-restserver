@@ -55,7 +55,7 @@ public class ChartDataRepository {
 	 * 
 	 * @return チャートデータの一覧。
 	 */
-	public synchronized String list() {
+	public synchronized String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (String key : chartMap.keySet()) {
 			ChartDataLogic cdl = chartMap.get(key);
