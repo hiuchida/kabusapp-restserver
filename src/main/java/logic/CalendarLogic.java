@@ -21,11 +21,11 @@ public class CalendarLogic {
 	/**
 	 * 基準パス。
 	 */
-	private static final String DIRPATH = "/tmp/";
+	private static final String SERVER_DIRPATH = "/tmp/server/";
 	/**
 	 * チャートＤＢディレクトリパス。
 	 */
-	private static final String DIR_DBPATH = DIRPATH + "db";
+	private static final String SERVER_DIR_DBPATH = SERVER_DIRPATH + "db";
 	/**
 	 * チャートカレンダーファイル名。
 	 */
@@ -33,7 +33,7 @@ public class CalendarLogic {
 	/**
 	 * チャートカレンダーファイルパス。存在しなければ生成される。
 	 */
-	private static final String DB_FILEPATH = DIR_DBPATH + "/" + DB_FILENAME;
+	private static final String DB_FILEPATH = SERVER_DIR_DBPATH + "/" + DB_FILENAME;
 
 	/**
 	 * チャートカレンダーのリスト。

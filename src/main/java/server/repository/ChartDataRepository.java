@@ -3,6 +3,7 @@ package server.repository;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -35,9 +36,27 @@ public class ChartDataRepository {
 	private static final String DB_FILENAME = "ChartData.csv";
 
 	/**
+	 * 初期化済フラグ。
+	 */
+	private boolean bInit = false;
+	/**
 	 * チャートデータを管理する。
 	 */
 	private Map<String, ChartDataLogic> chartMap = new TreeMap<>();
+
+	/**
+	 * 銘柄コードのリストを取得する。
+	 * 
+	 * @return 銘柄コードのリスト。
+	 */
+	public synchronized List<String> list() {
+		if (!bInit) {
+			load();
+			bInit = true;
+		}
+		List<String> codes = new ArrayList<>(chartMap.keySet());
+		return codes;
+	}
 
 	/**
 	 * 件数を取得する。
