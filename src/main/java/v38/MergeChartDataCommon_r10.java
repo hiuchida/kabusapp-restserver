@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import logic.CalendarLogic;
 import logic.FileLockLogic;
 import util.DateTimeUtil;
 import util.DateUtil;
 import util.FileUtil;
-import util.StdoutLog;
 import util.StringUtil;
 import v38.bean.MergeChartInfo_r10;
 import v38.factory.BarCode;
@@ -26,6 +28,10 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 * クラス。
 	 */
 	private static Class<?> clazz = MethodHandles.lookup().lookupClass();
+	/**
+	 * ロガー。
+	 */
+	private static Log logger = LogFactory.getLog(clazz);
 	/**
 	 * 基準パス。
 	 */
@@ -156,7 +162,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 			nowTime = startNowTime;
 		}
 		now = nowDate + " " + nowTime;
-		StdoutLog.println(clazz, "fillChartData(" + name + "_" + bar + ")", "Now=" + now);
+		logger.info("fillChartData(" + name + "_" + bar + "): Now=" + now);
 		String date = firstDate;
 		while (date.compareTo(lastDate) <= 0) {
 			{ // 日中のループ
@@ -217,7 +223,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 		}
 		copyFromPrev();
 		int delCnt = removeOld();
-		StdoutLog.println(clazz, "fillChartData(" + name + "_" + bar + ")", "addCnt=" + addCnt + ", delCnt=" + delCnt);
+		logger.info("fillChartData(" + name + "_" + bar + "): addCnt=" + addCnt + ", delCnt=" + delCnt);
 	}
 
 	/**
@@ -302,7 +308,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 			chartMap.put(key, mci);
 			readCnt++;
 		}
-		StdoutLog.println(clazz, "readDbChartData(" + name + "_" + bar + ")", "readCnt=" + readCnt);
+		logger.info("readDbChartData(" + name + "_" + bar + "): readCnt=" + readCnt);
 	}
 
 	/**
@@ -335,7 +341,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 				}
 				prev = cur;
 			}
-			StdoutLog.println(clazz, "readCsvChartData(" + name + "_" + bar + ")", "readCnt=" + lines.size());
+			logger.info("readCsvChartData(" + name + "_" + bar + "): readCnt=" + lines.size());
 			return lines;
 		} finally {
 			fileLockLogic.unlockFile();
@@ -410,7 +416,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 				}
 			}
 		}
-		StdoutLog.println(clazz, "mergeCsvChartData(" + name + "_" + bar + ")", "updateCnt=" + updateCnt);
+		logger.info("mergeCsvChartData(" + name + "_" + bar + "): updateCnt=" + updateCnt);
 		if (chartMap.size() > 0) {
 			fillChartData();
 		}
@@ -422,7 +428,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	public void writeChartMap() {
 		List<String> lines = new ArrayList<>();
 		lines.add(MergeChartInfo_r10.toHeaderString());
-		StdoutLog.println(clazz, "writeChartMap(" + name + "_" + bar + ")", "chartMap.size=" + chartMap.size());
+		logger.info("writeChartMap(" + name + "_" + bar + "): chartMap.size=" + chartMap.size());
 		for (String key : chartMap.keySet()) {
 			MergeChartInfo_r10 mci = chartMap.get(key);
 			lines.add(mci.toLineString());

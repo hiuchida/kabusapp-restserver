@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import util.CalendarUtil;
 import util.FileUtil;
-import util.StdoutLog;
 
 /**
  * 営業日を管理するクラス。
@@ -18,6 +20,10 @@ public class CalendarLogic {
 	 * クラス。
 	 */
 	private static Class<?> clazz = MethodHandles.lookup().lookupClass();
+	/**
+	 * ロガー。
+	 */
+	private static Log logger = LogFactory.getLog(clazz);
 	/**
 	 * 基準パス。
 	 */
@@ -56,7 +62,7 @@ public class CalendarLogic {
 			}
 			calendarSet.add(s);
 		}
-		StdoutLog.println(clazz, "readCalendar()", "calendarSet.size=" + calendarSet.size());
+		logger.info("readCalendar(): calendarSet.size=" + calendarSet.size());
 		calendarList = new ArrayList<>();
 		calendarList.addAll(calendarSet);
 	}
