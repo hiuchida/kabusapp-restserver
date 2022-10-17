@@ -8,8 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import server.repository.ChartDataRepository;
-import server.repository.ChartDbRepository;
+import server.repository.MergeDataRepository;
 import v38.MainCalcIndicator_r10;
 
 @Service
@@ -24,10 +23,7 @@ public class CalcIndicatorService {
 	private static Log logger = LogFactory.getLog(clazz);
 
 	@Autowired
-	private ChartDataRepository chartDataRepository;
-
-	@Autowired
-	private ChartDbRepository chartDbRepository;
+	private MergeDataRepository mergeDataRepository;
 
 	/**
 	 * テクニカル指標を計算する。
@@ -35,11 +31,10 @@ public class CalcIndicatorService {
 	 * @return レスポンス文字列。
 	 */
 	public String execute() {
-		chartDbRepository.list();
-		List<String> codes = chartDataRepository.list();
+		List<String> codes = mergeDataRepository.list();
 		logger.info("execute(): " + codes);
 		for (String code : codes) {
-			new MainCalcIndicator_r10(code).execute();
+			new MainCalcIndicator_r10(mergeDataRepository, code).execute();
 		}
 		return "OK";
 	}

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
+import server.repository.MergeDataRepository;
 import v38.MainMergeChartData_r10;
 
 @Service
@@ -29,6 +30,9 @@ public class MergeChartDataService {
 	@Autowired
 	private ChartDbRepository chartDbRepository;
 
+	@Autowired
+	private MergeDataRepository mergeDataRepository;
+
 	/**
 	 * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージした4本値と売買高を出力する。
 	 * 
@@ -39,7 +43,7 @@ public class MergeChartDataService {
 		List<String> codes = chartDataRepository.list();
 		logger.info("execute(): " + codes);
 		for (String code : codes) {
-			new MainMergeChartData_r10(chartDataRepository, chartDbRepository, code).execute();
+			new MainMergeChartData_r10(chartDataRepository, chartDbRepository, mergeDataRepository, code).execute();
 		}
 		return "OK";
 	}

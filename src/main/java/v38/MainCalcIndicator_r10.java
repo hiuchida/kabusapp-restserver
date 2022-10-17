@@ -3,12 +3,15 @@ package v38;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.repository.MergeDataRepository;
 import v38.factory.BarNameFactory_r10;
 
 /**
  * テクニカル指標を計算するクラス。
  */
 public class MainCalcIndicator_r10 {
+
+	private MergeDataRepository mergeDataRepository;
 
 	/**
 	 * テクニカル指標を計算するクラス。
@@ -18,9 +21,11 @@ public class MainCalcIndicator_r10 {
 	/**
 	 * コンストラクタ。
 	 * 
-	 * @param name ディレクトリ名。
+	 * @param mergeDataRepository
+	 * @param name                ディレクトリ名。
 	 */
-	public MainCalcIndicator_r10(String name) {
+	public MainCalcIndicator_r10(MergeDataRepository mergeDataRepository, String name) {
+		this.mergeDataRepository = mergeDataRepository;
 		for (String bar : BarNameFactory_r10.getBarNames()) {
 			calcList.add(new CalcCoordinator_r10(name, bar));
 		}
@@ -31,7 +36,7 @@ public class MainCalcIndicator_r10 {
 	 */
 	public void execute() {
 		for (CalcCoordinator_r10 calc : calcList) {
-			calc.execute();
+			calc.execute(mergeDataRepository);
 		}
 	}
 

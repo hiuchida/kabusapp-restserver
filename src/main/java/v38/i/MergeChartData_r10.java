@@ -5,6 +5,7 @@ import java.util.Map;
 
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
+import server.repository.MergeDataRepository;
 import v38.bean.MergeChartInfo_r10;
 import v38.factory.BarCode;
 
@@ -24,8 +25,9 @@ public interface MergeChartData_r10 {
 	 * 
 	 * @param chartDataRepository
 	 * @param chartDbRepository
+	 * @param mergeDataRepository
 	 */
-	public void execute(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository);
+	public void execute(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository, MergeDataRepository mergeDataRepository);
 
 	/**
 	 * 1分足の4本値チャートＤＢファイルから終値を読み込む。
@@ -51,8 +53,10 @@ public interface MergeChartData_r10 {
 
 	/**
 	 * マージしたチャートデータファイルを書き込む。
+	 * 
+	 * @param mergeDataRepository
 	 */
-	public void writeChartMap();
+	public void writeChartMap(MergeDataRepository mergeDataRepository);
 
 	/**
 	 * マージしたチャートデータを取得する。

@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
+import server.repository.MergeDataRepository;
 import v38.factory.BarNameFactory_r10;
 import v38.factory.MergeChartDataFactory_r10;
 import v38.i.MergeChartData_r10;
@@ -18,6 +19,8 @@ public class MainMergeChartData_r10 {
 
 	private ChartDbRepository chartDbRepository;
 
+	private MergeDataRepository mergeDataRepository;
+
 	/**
 	 * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージした4本値を出力するクラス。
 	 */
@@ -28,11 +31,14 @@ public class MainMergeChartData_r10 {
 	 * 
 	 * @param chartDataRepository
 	 * @param chartDbRepository
+	 * @param mergeDataRepository
 	 * @param name                ディレクトリ名。
 	 */
-	public MainMergeChartData_r10(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository, String name) {
+	public MainMergeChartData_r10(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository,
+			MergeDataRepository mergeDataRepository, String name) {
 		this.chartDataRepository = chartDataRepository;
 		this.chartDbRepository = chartDbRepository;
+		this.mergeDataRepository = mergeDataRepository;
 		this.mergeMap = MergeChartDataFactory_r10.create(name);
 	}
 
@@ -42,7 +48,7 @@ public class MainMergeChartData_r10 {
 	public void execute() {
 		for (String key : BarNameFactory_r10.getBarNames()) {
 			MergeChartData_r10 merge = mergeMap.get(key);
-			merge.execute(chartDataRepository, chartDbRepository);
+			merge.execute(chartDataRepository, chartDbRepository, mergeDataRepository);
 		}
 	}
 

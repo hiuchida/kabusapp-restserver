@@ -13,9 +13,9 @@ import org.apache.commons.logging.LogFactory;
 import logic.CalendarLogic;
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
+import server.repository.MergeDataRepository;
 import util.DateTimeUtil;
 import util.DateUtil;
-import util.FileUtil;
 import util.StringUtil;
 import v38.bean.MergeChartInfo_r10;
 import v38.factory.BarCode;
@@ -34,17 +34,9 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
 	/**
-	 * 基準パス。
-	 */
-	private static final String SERVER_DIRPATH = "/tmp/server/";
-	/**
 	 * 4本値チャートＤＢファイル名。
 	 */
 	private static final String DB_FILENAME = "ChartData%s_r10.db";
-	/**
-	 * チャートデータディレクトリパス。
-	 */
-	private static final String SERVER_DIR_CHARTPATH = SERVER_DIRPATH + "chart/";
 	/**
 	 * マージしたチャートデータファイル名。
 	 */
@@ -71,9 +63,9 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 */
 	protected Map<String, MergeChartInfo_r10> chartMap = new TreeMap<>();
 	/**
-	 * マージしたチャートデータファイルパス。
+	 * マージしたチャートデータファイル名。
 	 */
-	protected String txtFilePath;
+	protected String txtFileName;
 
 	/**
 	 * 足名の種別コードを取得する。
@@ -256,8 +248,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 		this.bar = bar;
 		this.code = StringUtil.parseString(name, "_");
 		this.dbFileName = String.format(DB_FILENAME, bar);
-		String dirChartPath = SERVER_DIR_CHARTPATH + name;
-		this.txtFilePath = dirChartPath + "/" + String.format(CHART_TXT_FILENAME, bar);
+		this.txtFileName = String.format(CHART_TXT_FILENAME, bar);
 	}
 
 	/**
@@ -265,12 +256,13 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 * 
 	 * @param chartDataRepository
 	 * @param chartDbRepository
+	 * @param mergeDataRepository
 	 */
-	public void execute(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository) {
+	public void execute(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository, MergeDataRepository mergeDataRepository) {
 		readDbChartData(chartDbRepository);
 		List<String> lines = readCsvChartData(chartDataRepository);
 		mergeCsvChartData(lines);
-		writeChartMap();
+		writeChartMap(mergeDataRepository);
 	}
 
 	/**
@@ -414,8 +406,10 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 
 	/**
 	 * マージしたチャートデータファイルを書き込む。
+	 * 
+	 * @param mergeDataRepository
 	 */
-	public void writeChartMap() {
+	public void writeChartMap(MergeDataRepository mergeDataRepository) {
 		List<String> lines = new ArrayList<>();
 		lines.add(MergeChartInfo_r10.toHeaderString());
 		logger.info("writeChartMap(" + name + "_" + bar + "): chartMap.size=" + chartMap.size());
@@ -423,7 +417,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 			MergeChartInfo_r10 mci = chartMap.get(key);
 			lines.add(mci.toLineString());
 		}
-		FileUtil.writeAllLines(txtFilePath, lines);
+		mergeDataRepository.writeAllLines(name, txtFileName, lines);
 	}
 
 	/**
@@ -477,7 +471,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	@Override
 	public String toString() {
 		return "MergeChartDataCommon_r10 [name=" + name + ", bar=" + bar + ", code=" + code + ", dbFileName="
-				+ dbFileName + ", chartMap.size=" + chartMap.size() + ", txtFilePath=" + txtFilePath + "]";
+				+ dbFileName + ", chartMap.size=" + chartMap.size() + ", txtFileName=" + txtFileName + "]";
 	}
 
 }
