@@ -30,7 +30,7 @@ public class MergeChartDataService {
 	private ChartDbRepository chartDbRepository;
 
 	/**
-	 * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージした4本値と売買高を出力する
+	 * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージした4本値と売買高を出力する。
 	 * 
 	 * @return レスポンス文字列。
 	 */
