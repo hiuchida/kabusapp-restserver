@@ -129,6 +129,7 @@ public class ChartDbRepository {
 			FileUtil.mkdirs(dirpath);
 			filepath = dirpath + "/" + cd.filename;
 		} else {
+			FileUtil.mkdirs(DIRPATH);
 			filepath = DIRPATH + cd.filename;
 		}
 		try (PrintWriter pw = FileUtil.writer(filepath, FileUtil.UTF8)) {
