@@ -76,6 +76,7 @@ public class FileLockUtil {
 		try {
 			if (lockInfo.fl != null) {
 				lockInfo.fl.release();
+				lockInfo.fl = null;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -83,6 +84,7 @@ public class FileLockUtil {
 		try {
 			if (lockInfo.fc != null) {
 				lockInfo.fc.close();
+				lockInfo.fc = null;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
