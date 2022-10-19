@@ -1,5 +1,7 @@
 package logic;
 
+import java.nio.channels.OverlappingFileLockException;
+
 import util.FileLockUtil;
 
 /**
@@ -28,6 +30,9 @@ public class FileLockLogic {
 
 	/**
 	 * ファイルロックする。
+	 * 
+	 * @throws IllegalStateException 既にロック済の場合。
+	 * @throws OverlappingFileLockException 同じJavaVMで同じファイルをロック済の場合。
 	 */
 	public void lockFile() {
 		boolean bFirst = true;

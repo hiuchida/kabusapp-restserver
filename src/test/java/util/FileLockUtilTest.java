@@ -11,6 +11,7 @@ import org.junit.Test;
 
 public class FileLockUtilTest {
 	private static final String FILEPATH = "FileLockUtilTest.lock";
+	private static final String FILEPATH2 = "FileLockUtilTest2.lock";
 
 	@Test
 	public void lockFalseTest() {
@@ -29,6 +30,30 @@ public class FileLockUtilTest {
 
 	@Test
 	public void lockFalseTest2() {
+		FileLockUtil.LockInfo lock = new FileLockUtil.LockInfo();
+		boolean bShared = false;
+		String filepath1 = FILEPATH;
+		String filepath2 = FILEPATH2;
+		try {
+			boolean a1 = FileLockUtil.lock(lock, bShared, filepath1);
+			assertTrue(a1);
+			assertNotNull(lock.fc);
+			assertNotNull(lock.fl);
+			try {
+				FileLockUtil.lock(lock, bShared, filepath2);
+				fail("must throw IllegalStateException.");
+			} catch (IllegalStateException e) {
+//				e.printStackTrace();
+				assertNotNull(lock.fc);
+				assertNotNull(lock.fl);
+			}
+		} finally {
+			FileLockUtil.unlock(lock);
+		}
+	}
+
+	@Test
+	public void lockFalseTest3() {
 		FileLockUtil.LockInfo lock1 = new FileLockUtil.LockInfo();
 		FileLockUtil.LockInfo lock2 = new FileLockUtil.LockInfo();
 		boolean bShared = false;
@@ -68,6 +93,30 @@ public class FileLockUtilTest {
 
 	@Test
 	public void lockTrueTest2() {
+		FileLockUtil.LockInfo lock = new FileLockUtil.LockInfo();
+		boolean bShared = true;
+		String filepath1 = FILEPATH;
+		String filepath2 = FILEPATH2;
+		try {
+			boolean a1 = FileLockUtil.lock(lock, bShared, filepath1);
+			assertTrue(a1);
+			assertNotNull(lock.fc);
+			assertNotNull(lock.fl);
+			try {
+				FileLockUtil.lock(lock, bShared, filepath2);
+				fail("must throw IllegalStateException.");
+			} catch (IllegalStateException e) {
+//				e.printStackTrace();
+				assertNotNull(lock.fc);
+				assertNotNull(lock.fl);
+			}
+		} finally {
+			FileLockUtil.unlock(lock);
+		}
+	}
+
+	@Test
+	public void lockTrueTest3() {
 		FileLockUtil.LockInfo lock1 = new FileLockUtil.LockInfo();
 		FileLockUtil.LockInfo lock2 = new FileLockUtil.LockInfo();
 		boolean bShared = true;

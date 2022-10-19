@@ -18,6 +18,10 @@ public class FileLockUtil {
 	public static class LockInfo {
 		public FileChannel fc;
 		public FileLock fl;
+		
+		public boolean isLocked() {
+			return fc != null && fl != null;
+		}
 	}
 
 	/**
@@ -46,8 +50,13 @@ public class FileLockUtil {
 	 * @param isShared true:共有ロック、false:排他ロック
 	 * @param lockPath ファイルパス
 	 * @return true:成功、false:失敗
+	 * @throws IllegalStateException 既にlockInfoがロック済の場合。
+	 * @throws OverlappingFileLockException 同じJavaVMで同じファイルをロック済の場合。
 	 */
 	public static boolean lock(LockInfo lockInfo, boolean isShared, String lockPath) {
+		if (lockInfo.isLocked()) {
+			throw new IllegalStateException();
+		}
 		OpenOption[] options = getOpenOption(isShared);
 		try {
 			File lockFile = new File(lockPath);
