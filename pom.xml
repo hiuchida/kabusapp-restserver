@@ -8,16 +8,11 @@
 		<version>2.7.4</version>
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>kabusapisrv</artifactId>
-	<name>Spring Boot Tomcat Sample</name>
-	<description>Spring Boot Tomcat Sample</description>
+	<artifactId>kabusapp-restserver</artifactId>
+	<name>kabusapp-restserver</name>
+	<description>kabusapp-restserver</description>
 	<version>1.0</version>
 	<packaging>war</packaging>
-	<url>http://projects.spring.io/spring-boot/</url>
-	<organization>
-		<name>Pivotal Software, Inc.</name>
-		<url>http://www.spring.io</url>
-	</organization>
 	<properties>
 		<main.basedir>${basedir}/../..</main.basedir>
 	</properties>
@@ -45,7 +40,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>kabusapisrv</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
