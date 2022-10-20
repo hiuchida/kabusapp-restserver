@@ -1,13 +1,11 @@
 package util;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
 
-@SpringBootTest
 public class StringUtilTest {
 
 	@Test
@@ -53,11 +51,11 @@ public class StringUtilTest {
 			String[] sa5 = StringUtil.splitTab(s5);
 			String[] se3 = { "a", "", "", };
 			String[] se4 = { "", "b", "", };
-			assertArrayEquals(s1, se1, sa1);
-			assertArrayEquals(s2, se2, sa2);
-			assertArrayEquals(s3, se3, sa3);
-			assertArrayEquals(s4, se4, sa4);
-			assertArrayEquals(s5, se5, sa5);
+			assertArrayEquals(se1, sa1, s1);
+			assertArrayEquals(se2, sa2, s2);
+			assertArrayEquals(se3, sa3, s3);
+			assertArrayEquals(se4, sa4, s4);
+			assertArrayEquals(se5, sa5, s5);
 		}
 		{
 			String[] sa1 = s1.split(TAB);
@@ -67,11 +65,11 @@ public class StringUtilTest {
 			String[] sa5 = s5.split(TAB);
 			String[] se3 = { "a", };
 			String[] se4 = { "", "b", };
-			assertArrayEquals(s1, se1, sa1);
-			assertArrayEquals(s2, se2, sa2);
-			assertArrayEquals(s3, se3, sa3);
-			assertArrayEquals(s4, se4, sa4);
-			assertArrayEquals(s5, se5, sa5);
+			assertArrayEquals(se1, sa1, s1);
+			assertArrayEquals(se2, sa2, s2);
+			assertArrayEquals(se3, sa3, s3);
+			assertArrayEquals(se4, sa4, s4);
+			assertArrayEquals(se5, sa5, s5);
 		}
 	}
 
@@ -122,11 +120,11 @@ public class StringUtilTest {
 			String[] sa5 = StringUtil.splitComma(s5);
 			String[] se3 = { "a", "", "", };
 			String[] se4 = { "", "b", "", };
-			assertArrayEquals(s1, se1, sa1);
-			assertArrayEquals(s2, se2, sa2);
-			assertArrayEquals(s3, se3, sa3);
-			assertArrayEquals(s4, se4, sa4);
-			assertArrayEquals(s5, se5, sa5);
+			assertArrayEquals(se1, sa1, s1);
+			assertArrayEquals(se2, sa2, s2);
+			assertArrayEquals(se3, sa3, s3);
+			assertArrayEquals(se4, sa4, s4);
+			assertArrayEquals(se5, sa5, s5);
 		}
 		{
 			String[] sa1 = s1.split(COMMA);
@@ -136,11 +134,11 @@ public class StringUtilTest {
 			String[] sa5 = s5.split(COMMA);
 			String[] se3 = { "a", };
 			String[] se4 = { "", "b", };
-			assertArrayEquals(s1, se1, sa1);
-			assertArrayEquals(s2, se2, sa2);
-			assertArrayEquals(s3, se3, sa3);
-			assertArrayEquals(s4, se4, sa4);
-			assertArrayEquals(s5, se5, sa5);
+			assertArrayEquals(se1, sa1, s1);
+			assertArrayEquals(se2, sa2, s2);
+			assertArrayEquals(se3, sa3, s3);
+			assertArrayEquals(se4, sa4, s4);
+			assertArrayEquals(se5, sa5, s5);
 		}
 	}
 
