@@ -80,6 +80,22 @@ public class ChartDbRepository {
 	}
 
 	/**
+	 * チャートDBの概要を取得する。
+	 * 
+	 * @return チャートDBの一覧。
+	 */
+	public synchronized String toSummaryString() {
+		StringBuilder sb = new StringBuilder();
+		int total = 0;
+		for (String key : chartMap.keySet()) {
+			ChartDbLogic cdl = chartMap.get(key);
+			total += cdl.count();
+		}
+		sb.append("Code: ").append(chartMap.size()).append(" , File: ").append(total);
+		return sb.toString();
+	}
+
+	/**
 	 * チャートDBの一覧を取得する。
 	 * 
 	 * @return チャートDBの一覧。

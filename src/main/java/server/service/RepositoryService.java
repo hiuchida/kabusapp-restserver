@@ -23,6 +23,15 @@ public class RepositoryService {
 	@Autowired
 	private IndicatorDataRepository indicatorDataRepository;
 
+	public String summary() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("ChartDataRepository: ").append(chartDataRepository.toSummaryString()).append("\r\n");
+		sb.append("ChartDbRepository: ").append(chartDbRepository.toSummaryString()).append("\r\n");
+		sb.append("MergeDataRepository: ").append(mergeDataRepository.toSummaryString()).append("\r\n");
+		sb.append("IndicatorDataRepository: ").append(indicatorDataRepository.toSummaryString()).append("\r\n");
+		return sb.toString();
+	}
+
 	public String list() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("ChartDataRepository").append("\r\n");

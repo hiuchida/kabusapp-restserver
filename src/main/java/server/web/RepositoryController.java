@@ -16,6 +16,12 @@ public class RepositoryController {
 	@RequestMapping("/repo")
 	@ResponseBody
 	public String repo() {
+		return this.repositoryService.summary();
+	}
+
+	@RequestMapping("/repo/list")
+	@ResponseBody
+	public String list() {
 		return this.repositoryService.list();
 	}
 

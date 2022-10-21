@@ -82,6 +82,22 @@ public class ChartDataRepository {
 	}
 
 	/**
+	 * チャートDBの概要を取得する。
+	 * 
+	 * @return チャートDBの一覧。
+	 */
+	public synchronized String toSummaryString() {
+		StringBuilder sb = new StringBuilder();
+		int total = 0;
+		for (String key : chartMap.keySet()) {
+			ChartDataLogic cdl = chartMap.get(key);
+			total += cdl.count();
+		}
+		sb.append("Code: ").append(chartMap.size()).append(" , File: ").append(total);
+		return sb.toString();
+	}
+
+	/**
 	 * チャートデータの一覧を取得する。
 	 * 
 	 * @return チャートデータの一覧。

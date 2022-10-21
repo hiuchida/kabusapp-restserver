@@ -25,10 +25,6 @@ public class IndicatorDataRepository {
 	 * ロガー。
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
-	/**
-	 * 基準パス。
-	 */
-	private static final String DIRPATH = "/tmp/server/chart/";
 
 	/**
 	 * チャートデータを管理する。
@@ -64,6 +60,22 @@ public class IndicatorDataRepository {
 			return new ArrayList<>();
 		}
 		return idl.list();
+	}
+
+	/**
+	 * チャートDBの概要を取得する。
+	 * 
+	 * @return チャートDBの一覧。
+	 */
+	public synchronized String toSummaryString() {
+		StringBuilder sb = new StringBuilder();
+		int total = 0;
+		for (String key : chartMap.keySet()) {
+			IndicatorDataLogic idl = chartMap.get(key);
+			total += idl.count();
+		}
+		sb.append("Code: ").append(chartMap.size()).append(" , File: ").append(total);
+		return sb.toString();
 	}
 
 	/**
