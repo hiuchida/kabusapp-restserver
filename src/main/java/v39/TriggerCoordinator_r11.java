@@ -32,11 +32,11 @@ public class TriggerCoordinator_r11 {
 	/**
 	 * 基準パス。
 	 */
-	private static final String DIRPATH = "/tmp/";
+	private static final String SERVER_DIRPATH = "/tmp/server/";
 	/**
 	 * チャートデータディレクトリパス。
 	 */
-	private static final String DIR_CHARTPATH = DIRPATH + "chart/";
+	private static final String SERVER_DIR_CHARTPATH = SERVER_DIRPATH + "chart/";
 	/**
 	 * マージしたチャートデータファイル名。
 	 */
@@ -67,7 +67,7 @@ public class TriggerCoordinator_r11 {
 	 */
 	public TriggerCoordinator_r11(String name, String bar) {
 		this.bar = bar;
-		String dirChartPath = DIR_CHARTPATH + name;
+		String dirChartPath = SERVER_DIR_CHARTPATH + name;
 		this.txtFilePath = dirChartPath + "/" + String.format(CHART_TXT_FILENAME, bar);
 		this.triggerList = TriggerIndicatorFactory_r11.create(name, bar);
 	}
