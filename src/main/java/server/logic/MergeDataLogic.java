@@ -26,7 +26,6 @@ public class MergeDataLogic {
 	 */
 	private Set<String> chartSet = null;
 
-
 	/**
 	 * コンストラクタ。
 	 * 
