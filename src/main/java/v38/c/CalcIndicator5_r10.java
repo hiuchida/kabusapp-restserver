@@ -1,6 +1,5 @@
 package v38.c;
 
-import java.io.PrintWriter;
 import java.util.List;
 
 import v38.CalcIndicatorCommon_r10;
@@ -57,30 +56,26 @@ public class CalcIndicator5_r10 extends CalcIndicatorCommon_r10 implements CalcI
 	}
 
 	/**
-	 * 計算値を表示する。
+	 * 計算値の文字列に変換する。
 	 * 
-	 * @param pw stdoutファイル。
-	 * @return 保存した件数。
+	 * @param cii テクニカル指標情報。
+	 * @return ファイルに保存する文字列。
 	 */
-	protected int printIndicator(PrintWriter pw) {
-		int writeCnt = 0;
-		for (CalcIndicatorInfo_r10 cii : indicatorList) {
-			double p = cii.values[0];
-			double d1 = cii.values[1];
-			double d2 = cii.values[2];
-			double d3 = cii.values[3];
-			double b1 = p - d1;
-			double b2 = p - d3;
-			double lbop = b1 - d3;
-			double s1 = p + d2;
-			double s2 = p + d3;
-			double hbop = s1 + d3;
-			pw.printf("%s,%d,%d", cii.date, cii.closePrice, cii.flag);
-			pw.printf(",%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f", lbop, b2, b1, p, s1, s2, hbop);
-			pw.println();
-			writeCnt++;
-		}
-		return writeCnt;
+	protected String toLineString(CalcIndicatorInfo_r10 cii) {
+		StringBuilder sb = new StringBuilder();
+		double p = cii.values[0];
+		double d1 = cii.values[1];
+		double d2 = cii.values[2];
+		double d3 = cii.values[3];
+		double b1 = p - d1;
+		double b2 = p - d3;
+		double lbop = b1 - d3;
+		double s1 = p + d2;
+		double s2 = p + d3;
+		double hbop = s1 + d3;
+		sb.append(String.format("%s,%d,%d", cii.date, cii.closePrice, cii.flag));
+		sb.append(String.format(",%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f", lbop, b2, b1, p, s1, s2, hbop));
+		return sb.toString();
 	}
 
 }

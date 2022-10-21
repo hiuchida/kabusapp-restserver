@@ -1,6 +1,5 @@
 package v38.c;
 
-import java.io.PrintWriter;
 import java.util.List;
 
 import v38.CalcIndicatorCommon_r10;
@@ -98,24 +97,20 @@ public class CalcIndicator8_r10 extends CalcIndicatorCommon_r10 implements CalcI
 	}
 
 	/**
-	 * 計算値を表示する。
+	 * 計算値の文字列に変換する。
 	 * 
-	 * @param pw stdoutファイル。
-	 * @return 保存した件数。
+	 * @param cii テクニカル指標情報。
+	 * @return ファイルに保存する文字列。
 	 */
-	protected int printIndicator(PrintWriter pw) {
-		int writeCnt = 0;
-		for (CalcIndicatorInfo_r10 cii : indicatorList) {
-			int price = (int) cii.values[0];
-			double bHigh = cii.values[1];
-			double reversal = cii.values[2];
-			int target = (int) cii.values[3];
-			pw.printf("%s,%d,%d", cii.date, cii.closePrice, cii.flag);
-			pw.printf(",%d,%s,%.2f,%d", price, bHigh > 0 ? "H" : "L", reversal, target);
-			pw.println();
-			writeCnt++;
-		}
-		return writeCnt;
+	protected String toLineString(CalcIndicatorInfo_r10 cii) {
+		StringBuilder sb = new StringBuilder();
+		int price = (int) cii.values[0];
+		double bHigh = cii.values[1];
+		double reversal = cii.values[2];
+		int target = (int) cii.values[3];
+		sb.append(String.format("%s,%d,%d", cii.date, cii.closePrice, cii.flag));
+		sb.append(String.format(",%d,%s,%.2f,%d", price, bHigh > 0 ? "H" : "L", reversal, target));
+		return sb.toString();
 	}
 
 }

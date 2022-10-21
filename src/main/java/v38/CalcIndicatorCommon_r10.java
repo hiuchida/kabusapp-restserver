@@ -68,12 +68,12 @@ public abstract class CalcIndicatorCommon_r10 implements CalcIndicator_r10 {
 	abstract protected void calcIndicator(List<MergeChartInfo_r10> chartList);
 
 	/**
-	 * 計算値を表示する。
+	 * 計算値の文字列に変換する。
 	 * 
-	 * @param pw stdoutファイル。
-	 * @return 保存した件数。
+	 * @param cii テクニカル指標情報。
+	 * @return ファイルに保存する文字列。
 	 */
-	abstract protected int printIndicator(PrintWriter pw);
+	abstract protected String toLineString(CalcIndicatorInfo_r10 cii);
 
 	/**
 	 * コンストラクタ。
@@ -125,7 +125,12 @@ public abstract class CalcIndicatorCommon_r10 implements CalcIndicator_r10 {
 	 */
 	private void printIndicator() {
 		try (PrintWriter pw = FileUtil.writer(outFilePath, FileUtil.UTF8)) {
-			int writeCnt = printIndicator(pw);
+			int writeCnt = 0;
+			for (CalcIndicatorInfo_r10 cii : indicatorList) {
+				String line = toLineString(cii);
+				pw.println(line);
+				writeCnt++;
+			}
 			logger.info("printIndicator(): " + outFilePath + ", writeCnt=" + writeCnt);
 		} catch (IOException e) {
 			e.printStackTrace();

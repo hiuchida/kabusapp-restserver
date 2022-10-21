@@ -1,6 +1,5 @@
 package v38.c;
 
-import java.io.PrintWriter;
 import java.util.List;
 
 import v38.CalcIndicatorCommon_r10;
@@ -83,23 +82,19 @@ public class CalcIndicator1_r10 extends CalcIndicatorCommon_r10 implements CalcI
 	}
 
 	/**
-	 * 計算値を表示する。
+	 * 計算値の文字列に変換する。
 	 * 
-	 * @param pw stdoutファイル。
-	 * @return 保存した件数。
+	 * @param cii テクニカル指標情報。
+	 * @return ファイルに保存する文字列。
 	 */
-	protected int printIndicator(PrintWriter pw) {
-		int writeCnt = 0;
-		for (CalcIndicatorInfo_r10 cii : indicatorList) {
-			double mean1 = cii.values[0];
-			double mean2 = cii.values[1];
-			double mean3 = cii.values[2];
-			pw.printf("%s,%d,%d", cii.date, cii.closePrice, cii.flag);
-			pw.printf(",%.2f,%.2f,%.2f", mean1, mean2, mean3);
-			pw.println();
-			writeCnt++;
-		}
-		return writeCnt;
+	protected String toLineString(CalcIndicatorInfo_r10 cii) {
+		StringBuilder sb = new StringBuilder();
+		double mean1 = cii.values[0];
+		double mean2 = cii.values[1];
+		double mean3 = cii.values[2];
+		sb.append(String.format("%s,%d,%d", cii.date, cii.closePrice, cii.flag));
+		sb.append(String.format(",%.2f,%.2f,%.2f", mean1, mean2, mean3));
+		return sb.toString();
 	}
 
 }
