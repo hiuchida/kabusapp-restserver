@@ -35,7 +35,7 @@ public class CalcCoordinator_r10 {
 	/**
 	 * ディレクトリ名。
 	 */
-	protected String name;
+	private String name;
 	/**
 	 * 足名。
 	 */
