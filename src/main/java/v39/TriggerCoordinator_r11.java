@@ -3,17 +3,14 @@ package v39;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import util.FileUtil;
+import server.repository.IndicatorDataRepository;
+import server.repository.MergeDataRepository;
 import util.StringUtil;
-import v38.CalcCoordinator_r10;
 import v38.bean.MergeChartInfo_r10;
-import v38.i.CalcIndicator_r10;
-import v38.i.MergeChartData_r10;
 import v39.factory.TriggerIndicatorFactory_r11;
 import v39.i.TriggerIndicator_r11;
 
@@ -30,18 +27,14 @@ public class TriggerCoordinator_r11 {
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
 	/**
-	 * 基準パス。
-	 */
-	private static final String SERVER_DIRPATH = "/tmp/server/";
-	/**
-	 * チャートデータディレクトリパス。
-	 */
-	private static final String SERVER_DIR_CHARTPATH = SERVER_DIRPATH + "chart/";
-	/**
 	 * マージしたチャートデータファイル名。
 	 */
 	private static final String CHART_TXT_FILENAME = "ChartData%s_r10.txt";
 
+	/**
+	 * ディレクトリ名。
+	 */
+	private String name;
 	/**
 	 * 足名。
 	 */
@@ -49,7 +42,7 @@ public class TriggerCoordinator_r11 {
 	/**
 	 * マージしたチャートデータファイルパス。
 	 */
-	private String txtFilePath;
+	private String txtFileName;
 	/**
 	 * マージしたチャートデータを時系列に並べたリスト。
 	 */
@@ -66,59 +59,32 @@ public class TriggerCoordinator_r11 {
 	 * @param bar  足名。
 	 */
 	public TriggerCoordinator_r11(String name, String bar) {
+		this.name = name;
 		this.bar = bar;
-		String dirChartPath = SERVER_DIR_CHARTPATH + name;
-		this.txtFilePath = dirChartPath + "/" + String.format(CHART_TXT_FILENAME, bar);
+		this.txtFileName = String.format(CHART_TXT_FILENAME, bar);
 		this.triggerList = TriggerIndicatorFactory_r11.create(name, bar);
 	}
 
 	/**
 	 * テクニカル指標からイベントトリガーを発火する。
 	 * 
-	 * @param merge マージインターフェイス。
-	 * @param calc  テクニカル指標計算クラス。
+	 * @param mergeDataRepository
+	 * @param indicatorDataRepository
 	 */
-	public void execute(MergeChartData_r10 merge, CalcCoordinator_r10 calc) {
-		readChartData(merge);
-		Map<Integer, CalcIndicator_r10> calcMap = calc.getCalcMap();
+	public void execute(MergeDataRepository mergeDataRepository, IndicatorDataRepository indicatorDataRepository) {
+		readChartData(mergeDataRepository);
 		for (TriggerIndicator_r11 ti : triggerList) {
-			CalcIndicator_r10 ci = calcMap.get(ti.getCode().intValue());
-			ti.execute(chartList, ci);
+			ti.execute(chartList, indicatorDataRepository);
 		}
 	}
 
 	/**
 	 * マージしたチャートデータを読み込む。
 	 * 
-	 * @param マージインターフェイス。
+	 * @param mergeDataRepository
 	 */
-	private void readChartData(MergeChartData_r10 merge) {
-		chartList.clear();
-		for (String key : merge.getChartMap().keySet()) {
-			MergeChartInfo_r10 mciSrc = merge.getChartMap().get(key);
-			String line = mciSrc.toLineString();
-			String[] cols = StringUtil.splitTab(line);
-			MergeChartInfo_r10 mci = new MergeChartInfo_r10(cols);
-			chartList.add(mci);
-		}
-		logger.info("readChartData(): bar=" + bar + ", chartList.size=" + chartList.size());
-	}
-
-	/**
-	 * テクニカル指標からイベントトリガーを発火する。
-	 */
-	public void execute() {
-		readChartData();
-		for (TriggerIndicator_r11 ti : triggerList) {
-			ti.execute(chartList);
-		}
-	}
-
-	/**
-	 * マージしたチャートデータを読み込む。
-	 */
-	private void readChartData() {
-		List<String> lines = FileUtil.readAllLines(txtFilePath);
+	private void readChartData(MergeDataRepository mergeDataRepository) {
+		List<String> lines = mergeDataRepository.lines(name, txtFileName);
 		for (String s : lines) {
 			if (s.startsWith("#")) {
 				continue;
@@ -131,7 +97,13 @@ public class TriggerCoordinator_r11 {
 			MergeChartInfo_r10 mci = new MergeChartInfo_r10(cols);
 			chartList.add(mci);
 		}
-		logger.info("readChartData(): " + txtFilePath + ", chartList.size=" + chartList.size());
+		logger.info("readChartData(): " + txtFileName + ", chartList.size=" + chartList.size());
+	}
+
+	@Override
+	public String toString() {
+		return "TriggerCoordinator_r11 [name=" + name + ", bar=" + bar + ", txtFileName=" + txtFileName + ", chartList.size="
+				+ chartList.size() + ", triggerList.size=" + triggerList.size() + "]";
 	}
 
 }

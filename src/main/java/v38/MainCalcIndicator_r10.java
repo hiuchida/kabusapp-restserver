@@ -3,6 +3,7 @@ package v38;
 import java.util.ArrayList;
 import java.util.List;
 
+import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
 import v38.factory.BarNameFactory_r10;
 
@@ -13,6 +14,8 @@ public class MainCalcIndicator_r10 {
 
 	private MergeDataRepository mergeDataRepository;
 
+	private IndicatorDataRepository indicatorDataRepository;
+
 	/**
 	 * テクニカル指標を計算するクラス。
 	 */
@@ -22,10 +25,12 @@ public class MainCalcIndicator_r10 {
 	 * コンストラクタ。
 	 * 
 	 * @param mergeDataRepository
-	 * @param name                ディレクトリ名。
+	 * @param indicatorDataRepository
+	 * @param name                    ディレクトリ名。
 	 */
-	public MainCalcIndicator_r10(MergeDataRepository mergeDataRepository, String name) {
+	public MainCalcIndicator_r10(MergeDataRepository mergeDataRepository, IndicatorDataRepository indicatorDataRepository, String name) {
 		this.mergeDataRepository = mergeDataRepository;
+		this.indicatorDataRepository = indicatorDataRepository;
 		for (String bar : BarNameFactory_r10.getBarNames()) {
 			calcList.add(new CalcCoordinator_r10(name, bar));
 		}
@@ -36,7 +41,7 @@ public class MainCalcIndicator_r10 {
 	 */
 	public void execute() {
 		for (CalcCoordinator_r10 calc : calcList) {
-			calc.execute(mergeDataRepository);
+			calc.execute(mergeDataRepository, indicatorDataRepository);
 		}
 	}
 

@@ -2,9 +2,9 @@ package v39.i;
 
 import java.util.List;
 
+import server.repository.IndicatorDataRepository;
 import v38.bean.MergeChartInfo_r10;
 import v38.factory.IndicatorCode;
-import v38.i.CalcIndicator_r10;
 
 /**
  * テクニカル指標からイベントトリガーを発火するインターフェイス。
@@ -20,16 +20,9 @@ public interface TriggerIndicator_r11 {
 	/**
 	 * テクニカル指標からイベントトリガーを発火する。
 	 * 
-	 * @param chartList マージしたチャートデータを時系列に並べたリスト。
-	 * @param ci        テクニカル指標を計算するクラス。
+	 * @param chartList               マージしたチャートデータを時系列に並べたリスト。
+	 * @param indicatorDataRepository
 	 */
-	public void execute(List<MergeChartInfo_r10> chartList, CalcIndicator_r10 ci);
-
-	/**
-	 * テクニカル指標からイベントトリガーを発火する。
-	 * 
-	 * @param chartList マージしたチャートデータを時系列に並べたリスト。
-	 */
-	public void execute(List<MergeChartInfo_r10> chartList);
+	public void execute(List<MergeChartInfo_r10> chartList, IndicatorDataRepository indicatorDataRepository);
 
 }

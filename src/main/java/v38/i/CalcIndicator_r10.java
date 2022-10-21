@@ -2,6 +2,7 @@ package v38.i;
 
 import java.util.List;
 
+import server.repository.IndicatorDataRepository;
 import v38.bean.CalcIndicatorInfo_r10;
 import v38.bean.MergeChartInfo_r10;
 import v38.factory.IndicatorCode;
@@ -20,9 +21,10 @@ public interface CalcIndicator_r10 {
 	/**
 	 * テクニカル指標を計算する。
 	 * 
-	 * @param chartList マージしたチャートデータを時系列に並べたリスト。
+	 * @param chartList               マージしたチャートデータを時系列に並べたリスト。
+	 * @param indicatorDataRepository
 	 */
-	public void execute(List<MergeChartInfo_r10> chartList);
+	public void execute(List<MergeChartInfo_r10> chartList, IndicatorDataRepository indicatorDataRepository);
 
 	/**
 	 * テクニカル指標のリストを取得する。

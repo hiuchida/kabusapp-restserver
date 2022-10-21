@@ -9,13 +9,12 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import server.repository.IndicatorDataRepository;
 import util.DateTimeUtil;
 import util.FileUtil;
 import util.StringUtil;
-import v38.bean.CalcIndicatorInfo_r10;
 import v38.bean.MergeChartInfo_r10;
 import v38.factory.IndicatorCode;
-import v38.i.CalcIndicator_r10;
 import v39.bean.TriggerIndicatorInfo_r11;
 import v39.i.TriggerIndicator_r11;
 
@@ -144,9 +143,9 @@ public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11
 	 */
 	protected List<EventInfo> eventList = new ArrayList<>();
 	/**
-	 * テクニカル指標のstdoutのファイルパス。
+	 * テクニカル指標のstdoutのファイル名。
 	 */
-	protected String indicatorFilePath;
+	protected String indicatorFileName;
 	/**
 	 * イベントトリガーのstdoutのファイルパス。
 	 */
@@ -184,7 +183,7 @@ public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11
 		this.name = name;
 		this.bar = bar;
 		String dirChartPath = SERVER_DIR_CHARTPATH + name;
-		this.indicatorFilePath = dirChartPath + "/" + String.format(CALC_FILENAME, bar, getCode().intValue());
+		this.indicatorFileName = String.format(CALC_FILENAME, bar, getCode().intValue());
 		this.outFilePath = dirChartPath + "/" + String.format(OUT_FILENAME, bar, getCode().intValue());
 		this.maxValues = maxValues;
 		this.type = type;
@@ -193,13 +192,13 @@ public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11
 	/**
 	 * テクニカル指標からイベントトリガーを発火する。
 	 * 
-	 * @param chartList マージしたチャートデータを時系列に並べたリスト。
-	 * @param ci        テクニカル指標を計算するクラス。
+	 * @param chartList               マージしたチャートデータを時系列に並べたリスト。
+	 * @param indicatorDataRepository
 	 */
-	public void execute(List<MergeChartInfo_r10> chartList, CalcIndicator_r10 ci) {
+	public void execute(List<MergeChartInfo_r10> chartList, IndicatorDataRepository indicatorDataRepository) {
 		this.chartList = chartList;
 		eventList.clear();
-		readIndicatorData(ci);
+		readIndicatorData(indicatorDataRepository);
 		checkIndicator();
 		if (eventList.size() > 0) {
 			try (PrintWriter pw = FileUtil.writer(outFilePath, FileUtil.UTF8)) {
@@ -215,44 +214,11 @@ public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11
 	/**
 	 * テクニカル指標のstdoutファイルを読み込む。
 	 * 
-	 * @param ci テクニカル指標を計算するクラス。
+	 * @param indicatorDataRepository
 	 */
-	private void readIndicatorData(CalcIndicator_r10 ci) {
+	private void readIndicatorData(IndicatorDataRepository indicatorDataRepository) {
 		indicatorList.clear();
-		for (CalcIndicatorInfo_r10 cii : ci.getIndicatorList()) {
-			TriggerIndicatorInfo_r11 tii = new TriggerIndicatorInfo_r11(cii);
-			indicatorList.add(tii);
-		}
-		logger.info("readIndicatorData(): bar=" + bar + ", indicatorList.size=" + indicatorList.size());
-	}
-
-	/**
-	 * テクニカル指標からイベントトリガーを発火する。
-	 * 
-	 * @param chartList マージしたチャートデータを時系列に並べたリスト。
-	 */
-	public void execute(List<MergeChartInfo_r10> chartList) {
-		this.chartList = chartList;
-		eventList.clear();
-		readIndicatorData();
-		checkIndicator();
-		if (eventList.size() > 0) {
-			try (PrintWriter pw = FileUtil.writer(outFilePath, FileUtil.UTF8)) {
-				printEvent(pw);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
-			FileUtil.deleteFile(outFilePath);
-		}
-	}
-
-	/**
-	 * テクニカル指標のstdoutファイルを読み込む。
-	 */
-	private void readIndicatorData() {
-		indicatorList.clear();
-		List<String> lines = FileUtil.readAllLines(indicatorFilePath);
+		List<String> lines = indicatorDataRepository.lines(name, indicatorFileName);
 		for (String s : lines) {
 			if (s.startsWith("#")) {
 				continue;
@@ -270,7 +236,7 @@ public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11
 			}
 			indicatorList.add(tii);
 		}
-		logger.info("readIndicatorData(): " + indicatorFilePath + ", indicatorList.size=" + indicatorList.size());
+		logger.info("readIndicatorData(): " + indicatorFileName + ", indicatorList.size=" + indicatorList.size());
 	}
 
 	/**
@@ -295,6 +261,14 @@ public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11
 			writeCnt++;
 		}
 		logger.info("printEvent(): " + outFilePath + ", writeCnt=" + writeCnt);
+	}
+
+	@Override
+	public String toString() {
+		return "TriggerIndicatorCommon_r11 [name=" + name + ", bar=" + bar + ", chartList.size=" + chartList.size()
+				+ ", indicatorList.size=" + indicatorList.size() + ", eventList.size=" + eventList.size() + ", indicatorFileName="
+				+ indicatorFileName + ", outFilePath=" + outFilePath + ", maxValues=" + maxValues + ", type=" + type
+				+ "]";
 	}
 
 }

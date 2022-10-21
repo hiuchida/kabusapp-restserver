@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
 import util.StringUtil;
 import v38.bean.MergeChartInfo_r10;
@@ -70,11 +71,12 @@ public class CalcCoordinator_r10 {
 	 * テクニカル指標を計算する。
 	 * 
 	 * @param mergeDataRepository
+	 * @param indicatorDataRepository
 	 */
-	public void execute(MergeDataRepository mergeDataRepository) {
+	public void execute(MergeDataRepository mergeDataRepository, IndicatorDataRepository indicatorDataRepository) {
 		readChartData(mergeDataRepository);
 		for (CalcIndicator_r10 ci : calcList) {
-			ci.execute(chartList);
+			ci.execute(chartList, indicatorDataRepository);
 		}
 	}
 

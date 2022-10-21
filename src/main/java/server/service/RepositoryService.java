@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
+import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
 
 @Service
@@ -19,6 +20,9 @@ public class RepositoryService {
 	@Autowired
 	private MergeDataRepository mergeDataRepository;
 
+	@Autowired
+	private IndicatorDataRepository indicatorDataRepository;
+
 	public String list() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("ChartDataRepository").append("\r\n");
@@ -27,6 +31,8 @@ public class RepositoryService {
 		sb.append(chartDbRepository.toString()).append("\r\n");
 		sb.append("MergeDataRepository").append("\r\n");
 		sb.append(mergeDataRepository.toString()).append("\r\n");
+		sb.append("IndicatorDataRepository").append("\r\n");
+		sb.append(indicatorDataRepository.toString()).append("\r\n");
 		return sb.toString();
 	}
 

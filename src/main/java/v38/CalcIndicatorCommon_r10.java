@@ -1,7 +1,5 @@
 package v38;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +7,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import util.FileUtil;
+import server.repository.IndicatorDataRepository;
 import v38.bean.CalcIndicatorInfo_r10;
 import v38.bean.MergeChartInfo_r10;
 import v38.factory.IndicatorCode;
@@ -28,18 +26,14 @@ public abstract class CalcIndicatorCommon_r10 implements CalcIndicator_r10 {
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
 	/**
-	 * 基準パス。
-	 */
-	private static final String SERVER_DIRPATH = "/tmp/server/";
-	/**
-	 * チャートデータディレクトリパス。
-	 */
-	private static final String SERVER_DIR_CHARTPATH = SERVER_DIRPATH + "chart/";
-	/**
 	 * テクニカル指標のstdoutのファイル名。
 	 */
 	private static final String OUT_FILENAME = "CalcIndicator%s_%d.out";
 
+	/**
+	 * ディレクトリ名。
+	 */
+	protected String name;
 	/**
 	 * 足名。
 	 */
@@ -49,9 +43,9 @@ public abstract class CalcIndicatorCommon_r10 implements CalcIndicator_r10 {
 	 */
 	protected List<CalcIndicatorInfo_r10> indicatorList = new ArrayList<>();
 	/**
-	 * テクニカル指標のstdoutのファイルパス。
+	 * テクニカル指標のstdoutのファイル名。
 	 */
-	protected String outFilePath;
+	protected String outFileName;
 
 	/**
 	 * テクニカル指標の種別コードを取得する。
@@ -82,21 +76,22 @@ public abstract class CalcIndicatorCommon_r10 implements CalcIndicator_r10 {
 	 * @param bar  足名。
 	 */
 	public CalcIndicatorCommon_r10(String name, String bar) {
+		this.name = name;
 		this.bar = bar;
-		String dirChartPath = SERVER_DIR_CHARTPATH + name;
-		this.outFilePath = dirChartPath + "/" + String.format(OUT_FILENAME, bar, getCode().intValue());
+		this.outFileName = String.format(OUT_FILENAME, bar, getCode().intValue());
 	}
 
 	/**
 	 * テクニカル指標を計算する。
 	 * 
-	 * @param chartList マージしたチャートデータを時系列に並べたリスト。
+	 * @param chartList               マージしたチャートデータを時系列に並べたリスト。
+	 * @param indicatorDataRepository
 	 */
-	public void execute(List<MergeChartInfo_r10> chartList) {
+	public void execute(List<MergeChartInfo_r10> chartList, IndicatorDataRepository indicatorDataRepository) {
 		indicatorList.clear();
 		calcIndicator(chartList);
 		removeOld();
-		printIndicator();
+		printIndicator(indicatorDataRepository);
 	}
 
 	/**
@@ -122,19 +117,18 @@ public abstract class CalcIndicatorCommon_r10 implements CalcIndicator_r10 {
 
 	/**
 	 * 計算値を表示する。
+	 * 
+	 * @param indicatorDataRepository
 	 */
-	private void printIndicator() {
-		try (PrintWriter pw = FileUtil.writer(outFilePath, FileUtil.UTF8)) {
-			int writeCnt = 0;
-			for (CalcIndicatorInfo_r10 cii : indicatorList) {
-				String line = toLineString(cii);
-				pw.println(line);
-				writeCnt++;
-			}
-			logger.info("printIndicator(): " + outFilePath + ", writeCnt=" + writeCnt);
-		} catch (IOException e) {
-			e.printStackTrace();
+	private void printIndicator(IndicatorDataRepository indicatorDataRepository) {
+		List<String> lines = new ArrayList<>();
+		int writeCnt = 0;
+		for (CalcIndicatorInfo_r10 cii : indicatorList) {
+			lines.add(toLineString(cii));
+			writeCnt++;
 		}
+		indicatorDataRepository.writeAllLines(name, outFileName, lines);
+		logger.info("printIndicator(): " + outFileName + ", writeCnt=" + writeCnt);
 	}
 
 	/**
@@ -148,8 +142,8 @@ public abstract class CalcIndicatorCommon_r10 implements CalcIndicator_r10 {
 
 	@Override
 	public String toString() {
-		return "CalcIndicatorCommon_r10 [bar=" + bar + ", indicatorList.size=" + indicatorList.size() + ", outFilePath="
-				+ outFilePath + "]";
+		return "CalcIndicatorCommon_r10 [name=" + name + ", bar=" + bar + ", indicatorList.size=" + indicatorList.size()
+				+ ", outFileName=" + outFileName + "]";
 	}
 
 }
