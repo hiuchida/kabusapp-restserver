@@ -9,7 +9,15 @@ import v39.i.TriggerIndicator_r11;
  * テクニカル指標(SMA5,SMA25,SMA75)からイベントトリガーを発火するクラス。
  */
 public class TriggerIndicator1_r11 extends TriggerIndicatorCommon_r11 implements TriggerIndicator_r11 {
-
+	/**
+	 * トリガー種別：ゴールデンクロス。
+	 */
+	public static final String GC = "GC";
+	/**
+	 * トリガー種別：デッドクロス。
+	 */
+	public static final String DC = "DC";
+	
 	/**
 	 * コンストラクタ。
 	 * 
@@ -44,28 +52,28 @@ public class TriggerIndicator1_r11 extends TriggerIndicatorCommon_r11 implements
 			double mean31 = tii1.values[2];
 			double mean30 = tii0.values[2];
 			if (mean10 < mean20 && mean11 > mean21) {
-				String msg = String.format("[%s] GC SMA5  > SMA25 (%.2f %.2f)->(%.2f %.2f)", date, mean10, mean20, mean11, mean21);
-				addEvent(msg);
+				String msg = String.format("SMA5  > SMA25 (%.2f %.2f)->(%.2f %.2f)", mean10, mean20, mean11, mean21);
+				addEvent(date, GC, msg);
 			}
 			if (mean10 > mean20 && mean11 < mean21) {
-				String msg = String.format("[%s] DC SMA5  < SMA25 (%.2f %.2f)->(%.2f %.2f)", date, mean10, mean20, mean11, mean21);
-				addEvent(msg);
+				String msg = String.format("SMA5  < SMA25 (%.2f %.2f)->(%.2f %.2f)", mean10, mean20, mean11, mean21);
+				addEvent(date, DC, msg);
 			}
 			if (mean20 < mean30 && mean21 > mean31) {
-				String msg = String.format("[%s] GC SMA25 > SMA75 (%.2f %.2f)->(%.2f %.2f)", date, mean20, mean30, mean21, mean31);
-				addEvent(msg);
+				String msg = String.format("SMA25 > SMA75 (%.2f %.2f)->(%.2f %.2f)", mean20, mean30, mean21, mean31);
+				addEvent(date, GC, msg);
 			}
 			if (mean20 > mean30 && mean21 < mean31) {
-				String msg = String.format("[%s] DC SMA25 < SMA75 (%.2f %.2f)->(%.2f %.2f)", date, mean20, mean30, mean21, mean31);
-				addEvent(msg);
+				String msg = String.format("SMA25 < SMA75 (%.2f %.2f)->(%.2f %.2f)", mean20, mean30, mean21, mean31);
+				addEvent(date, DC, msg);
 			}
 			if (mean10 < mean30 && mean11 > mean31) {
-				String msg = String.format("[%s] GC SMA5  > SMA75 (%.2f %.2f)->(%.2f %.2f)", date, mean10, mean30, mean11, mean31);
-				addEvent(msg);
+				String msg = String.format("SMA5  > SMA75 (%.2f %.2f)->(%.2f %.2f)", mean10, mean30, mean11, mean31);
+				addEvent(date, GC, msg);
 			}
 			if (mean10 > mean30 && mean11 < mean31) {
-				String msg = String.format("[%s] DC SMA5  < SMA75 (%.2f %.2f)->(%.2f %.2f)", date, mean10, mean30, mean11, mean31);
-				addEvent(msg);
+				String msg = String.format("SMA5  < SMA75 (%.2f %.2f)->(%.2f %.2f)", mean10, mean30, mean11, mean31);
+				addEvent(date, DC, msg);
 			}
 		}
 	}
