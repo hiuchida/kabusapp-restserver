@@ -93,7 +93,7 @@ public class ChartDataRepository {
 			ChartDataLogic cdl = chartMap.get(key);
 			total += cdl.count();
 		}
-		sb.append("Code: ").append(chartMap.size()).append(" , File: ").append(total);
+		sb.append("File: ").append(chartMap.size()).append(" , Line: ").append(total);
 		return sb.toString();
 	}
 

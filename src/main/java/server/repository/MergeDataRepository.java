@@ -74,7 +74,7 @@ public class MergeDataRepository {
 			MergeDataLogic mdl = chartMap.get(key);
 			total += mdl.count();
 		}
-		sb.append("Code: ").append(chartMap.size()).append(" , File: ").append(total);
+		sb.append("File: ").append(chartMap.size()).append(" , Line: ").append(total);
 		return sb.toString();
 	}
 
