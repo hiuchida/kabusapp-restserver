@@ -32,7 +32,8 @@ public class MainCalcIndicator_r10 {
 		this.mergeDataRepository = mergeDataRepository;
 		this.indicatorDataRepository = indicatorDataRepository;
 		for (String bar : BarNameFactory_r10.getBarNames()) {
-			calcList.add(new CalcCoordinator_r10(name, bar));
+			CalcCoordinator_r10 calc = new CalcCoordinator_r10(name, bar);
+			calcList.add(calc);
 		}
 	}
 

@@ -154,4 +154,10 @@ public class TriggerChartData_r12 {
 		logger.info("printEvent(): " + outFilePath + ", writeCnt=" + writeCnt);
 	}
 
+	@Override
+	public String toString() {
+		return "TriggerChartData_r12 [name=" + name + ", outFilePath=" + outFilePath + ", chartList.size=" + chartList.size()
+				+ ", reportList.size=" + reportList.size() + "]";
+	}
+
 }

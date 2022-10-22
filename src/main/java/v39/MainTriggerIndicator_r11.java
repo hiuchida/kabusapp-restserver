@@ -32,7 +32,8 @@ public class MainTriggerIndicator_r11 {
 		this.mergeDataRepository = mergeDataRepository;
 		this.indicatorDataRepository = indicatorDataRepository;
 		for (String bar : BarNameFactory_r10.getBarNames()) {
-			triggerList.add(new TriggerCoordinator_r11(name, bar));
+			TriggerCoordinator_r11 trigger = new TriggerCoordinator_r11(name, bar);
+			triggerList.add(trigger);
 		}
 	}
 
