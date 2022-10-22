@@ -10,14 +10,31 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import server.repository.ChartDataRepository;
-import util.DateTimeUtil;
 import util.FileUtil;
 import util.StringUtil;
+import v39.bean.EventInfo;
 
 /**
  * ティックデータからイベントトリガーを発火するクラス。
  */
 public class TriggerTickData_r12 {
+	/**
+	 * 足名：ティック。
+	 */
+	public static final String TICK = "tick";
+	/**
+	 * テクニカル指標の種別：ティック。
+	 */
+	public static final String TICK_CODE = "0";
+	/**
+	 * トリガー種別：以上。
+	 */
+	public static final String GE = "GE";
+	/**
+	 * トリガー種別：以下。
+	 */
+	public static final String LE = "LE";
+	
 	/**
 	 * クラス。
 	 */
@@ -52,9 +69,9 @@ public class TriggerTickData_r12 {
 	 */
 	private List<String> chartList = new ArrayList<>();
 	/**
-	 * イベントトリガーのリスト。
+	 * イベントトリガー情報のリスト。
 	 */
-	protected List<String> reportList = new ArrayList<>();
+	private List<EventInfo> eventList = new ArrayList<>();
 
 	/**
 	 * コンストラクタ。
@@ -74,7 +91,7 @@ public class TriggerTickData_r12 {
 	 */
 	public void execute(ChartDataRepository chartDataRepository) {
 		readChartData(chartDataRepository);
-		reportList.clear();
+		eventList.clear();
 		try (PrintWriter pw = FileUtil.writer(outFilePath, FileUtil.UTF8)) {
 			checkChartData();
 			printEvent(pw);
@@ -132,10 +149,22 @@ public class TriggerTickData_r12 {
 			String date = cols[0];
 			int price = (int) StringUtil.parseDouble(cols[1]);
 			if (price >= TEST_PRICE) {
-				String msg = String.format("[%s] price %d >= %d", date, price, TEST_PRICE);
-				reportList.add(msg);
+				String msg = String.format("price %d >= %d", price, TEST_PRICE);
+				addEvent(date, GE, msg);
 			}
 		}
+	}
+
+	/**
+	 * イベントトリガー情報を追加する。
+	 * 
+	 * @param date   日付。
+	 * @param type   トリガー種別。
+	 * @param report レポート本文。
+	 */
+	private void addEvent(String date, String type, String report) {
+		EventInfo event = new EventInfo(name, TICK, TICK_CODE, date, type, report);
+		eventList.add(event);
 	}
 
 	/**
@@ -145,10 +174,8 @@ public class TriggerTickData_r12 {
 	 */
 	private void printEvent(PrintWriter pw) {
 		int writeCnt = 0;
-		for (String msg : reportList) {
-			String now = DateTimeUtil.nowToString();
-			pw.printf("%s %s", now, msg);
-			pw.println();
+		for (EventInfo event : eventList) {
+			pw.println(event.toLineString());
 			writeCnt++;
 		}
 		logger.info("printEvent(): " + outFilePath + ", writeCnt=" + writeCnt);
@@ -157,7 +184,7 @@ public class TriggerTickData_r12 {
 	@Override
 	public String toString() {
 		return "TriggerChartData_r12 [name=" + name + ", outFilePath=" + outFilePath + ", chartList.size=" + chartList.size()
-				+ ", reportList.size=" + reportList.size() + "]";
+				+ ", eventList.size=" + eventList.size() + "]";
 	}
 
 }
