@@ -31,7 +31,7 @@ public class TriggerTickData_r12 {
 	 */
 	private static final String SERVER_DIRPATH = "/tmp/server/";
 	/**
-	 * チャートデータディレクトリパス。
+	 * ティックデータディレクトリパス。
 	 */
 	private static final String SERVER_DIR_CHARTPATH = SERVER_DIRPATH + "chart/";
 	/**
@@ -48,7 +48,7 @@ public class TriggerTickData_r12 {
 	 */
 	protected String outFilePath;
 	/**
-	 * チャートデータのリスト。
+	 * ティックデータのリスト。
 	 */
 	private List<String> chartList = new ArrayList<>();
 	/**
@@ -84,7 +84,7 @@ public class TriggerTickData_r12 {
 	}
 
 	/**
-	 * マージしたチャートデータを読み込む。
+	 * 抽出したティックデータを読み込む。
 	 * 
 	 * @param chartDataRepository
 	 */
@@ -122,7 +122,7 @@ public class TriggerTickData_r12 {
 	}
 
 	/**
-	 * チャートデータをチェックする。
+	 * ティックデータをチェックする。
 	 */
 	private void checkChartData() {
 		final int TEST_PRICE = 26420;
