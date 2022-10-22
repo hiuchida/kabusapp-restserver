@@ -47,10 +47,7 @@ public class ChartDbRepository {
 	 * @return 「銘柄コードとファイル名」のリスト。
 	 */
 	public synchronized List<String> list() {
-		if (!bInit) {
-			load();
-			bInit = true;
-		}
+		load();
 		List<String> codes = new ArrayList<>(chartMap.keySet());
 		return codes;
 	}
@@ -113,6 +110,10 @@ public class ChartDbRepository {
 	 * すべてのファイルをロードする。
 	 */
 	public synchronized void load() {
+		if (bInit) {
+			return;
+		}
+		bInit = true;
 		{
 			ChartDbLogic cdl = loadChartDb("", CalendarLogic.DB_FILENAME);
 			List<String> lines = cdl.list();
@@ -123,6 +124,49 @@ public class ChartDbRepository {
 		for (String code : dirs) {
 			List<String> files = FileUtil.listFiles(DIRPATH + code);
 			logger.info("load(" + code + "): " + files);
+			for (String name : files) {
+				loadChartDb(code, name);
+			}
+		}
+	}
+
+	/**
+	 * すべてのファイルをリフレッシュする。
+	 */
+	public synchronized void refresh() {
+		bInit = true;
+		{
+			ChartDbLogic cdl = loadChartDb("", CalendarLogic.DB_FILENAME);
+			List<String> lines = cdl.list();
+			CalendarLogic.initCalendar(lines);
+		}
+		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		logger.info("refresh(): " + dirs);
+		for (String code : dirs) {
+			List<String> files = FileUtil.listFiles(DIRPATH + code);
+			logger.info("refresh(" + code + "): " + files);
+			for (String name : files) {
+				loadChartDb(code, name);
+			}
+		}
+	}
+
+	/**
+	 * すべてのファイルをリロードする。
+	 */
+	public synchronized void reload() {
+		bInit = true;
+		chartMap.clear();
+		{
+			ChartDbLogic cdl = loadChartDb("", CalendarLogic.DB_FILENAME);
+			List<String> lines = cdl.list();
+			CalendarLogic.initCalendar(lines);
+		}
+		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		logger.info("reload(): " + dirs);
+		for (String code : dirs) {
+			List<String> files = FileUtil.listFiles(DIRPATH + code);
+			logger.info("reload(" + code + "): " + files);
 			for (String name : files) {
 				loadChartDb(code, name);
 			}

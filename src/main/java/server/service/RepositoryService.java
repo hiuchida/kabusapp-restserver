@@ -50,4 +50,14 @@ public class RepositoryService {
 		chartDbRepository.load();
 	}
 
+	public void refresh() {
+		chartDataRepository.refresh();
+		chartDbRepository.refresh();
+	}
+
+	public void reload() {
+		chartDataRepository.reload();
+		chartDbRepository.reload();
+	}
+
 }

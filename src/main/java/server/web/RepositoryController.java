@@ -31,4 +31,16 @@ public class RepositoryController {
 		this.repositoryService.load();
 	}
 
+	@RequestMapping("/repo/refresh")
+	@ResponseBody
+	public void refresh() {
+		this.repositoryService.refresh();
+	}
+
+	@RequestMapping("/repo/reload")
+	@ResponseBody
+	public void reload() {
+		this.repositoryService.reload();
+	}
+
 }

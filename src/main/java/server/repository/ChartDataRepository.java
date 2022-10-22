@@ -50,10 +50,7 @@ public class ChartDataRepository {
 	 * @return 銘柄コードのリスト。
 	 */
 	public synchronized List<String> list() {
-		if (!bInit) {
-			load();
-			bInit = true;
-		}
+		load();
 		List<String> codes = new ArrayList<>(chartMap.keySet());
 		return codes;
 	}
@@ -115,8 +112,37 @@ public class ChartDataRepository {
 	 * すべてのファイルをロードする。
 	 */
 	public synchronized void load() {
+		if (bInit) {
+			return;
+		}
+		bInit = true;
 		List<String> dirs = FileUtil.listDirs(DIRPATH);
 		logger.info("load(): " + dirs);
+		for (String code : dirs) {
+			loadChartData(code);
+		}
+	}
+
+	/**
+	 * すべてのファイルをリフレッシュする。
+	 */
+	public synchronized void refresh() {
+		bInit = true;
+		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		logger.info("refresh(): " + dirs);
+		for (String code : dirs) {
+			loadChartData(code);
+		}
+	}
+
+	/**
+	 * すべてのファイルをリロードする。
+	 */
+	public synchronized void reload() {
+		bInit = true;
+		chartMap.clear();
+		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		logger.info("reload(): " + dirs);
 		for (String code : dirs) {
 			loadChartData(code);
 		}
