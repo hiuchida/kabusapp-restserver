@@ -17,7 +17,7 @@ import util.StringUtil;
 /**
  * ティックデータからイベントトリガーを発火するクラス。
  */
-public class TriggerChartData_r12 {
+public class TriggerTickData_r12 {
 	/**
 	 * クラス。
 	 */
@@ -61,7 +61,7 @@ public class TriggerChartData_r12 {
 	 * 
 	 * @param name ディレクトリ名。
 	 */
-	public TriggerChartData_r12(String name) {
+	public TriggerTickData_r12(String name) {
 		this.name = name;
 		String dirChartPath = SERVER_DIR_CHARTPATH + name;
 		this.outFilePath = dirChartPath + "/" + OUT_FILENAME;
