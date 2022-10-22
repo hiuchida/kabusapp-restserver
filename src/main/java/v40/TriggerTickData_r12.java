@@ -37,7 +37,7 @@ public class TriggerTickData_r12 {
 	/**
 	 * イベントトリガーのstdoutのファイル名。
 	 */
-	private static final String OUT_FILENAME = "TriggerIndicator.out";
+	private static final String OUT_FILENAME = "TriggerTickData.out";
 
 	/**
 	 * ディレクトリ名。
