@@ -22,30 +22,13 @@ public class CalendarLogic {
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
 	/**
-	 * 基準パス。
-	 */
-//	private static final String SERVER_DIRPATH = "/tmp/server/";
-	/**
-	 * チャートＤＢディレクトリパス。
-	 */
-//	private static final String SERVER_DIR_DBPATH = SERVER_DIRPATH + "db";
-	/**
 	 * チャートカレンダーファイル名。
 	 */
 	public static final String DB_FILENAME = "ChartCalendar.db";
 	/**
-	 * チャートカレンダーファイルパス。存在しなければ生成される。
-	 */
-//	private static final String DB_FILEPATH = SERVER_DIR_DBPATH + "/" + DB_FILENAME;
-
-	/**
 	 * チャートカレンダーのリスト。
 	 */
 	private static List<String> calendarList;
-
-//	static {
-//		readCalendar();
-//	}
 
 	/**
 	 * チャートカレンダーを初期化する。
@@ -64,29 +47,15 @@ public class CalendarLogic {
 	}
 
 	/**
-	 * チャートカレンダーファイルを読み込む。
-	 */
-//	private static void readCalendar() {
-//		Set<String> calendarSet = new TreeSet<>();
-//		List<String> lines = FileUtil.readAllLines(DB_FILEPATH);
-//		for (String s : lines) {
-//			if (s.startsWith("#")) {
-//				continue;
-//			}
-//			calendarSet.add(s);
-//		}
-//		logger.info("readCalendar(): calendarSet.size=" + calendarSet.size());
-//		calendarList = new ArrayList<>();
-//		calendarList.addAll(calendarSet);
-//	}
-
-	/**
 	 * 前営業日の日付を検索する。
 	 * 
 	 * @param date 今日の日付。
 	 * @return 前営業日の日付。存在しない場合はnull。
 	 */
 	public static String prevWorkday(String date) {
+		if (calendarList == null) {
+			throw new InternalError("logic bug: must call initCalendar().");
+		}
 		return CalendarUtil.prevWorkday(calendarList, date);
 	}
 
@@ -97,6 +66,9 @@ public class CalendarLogic {
 	 * @return 翌営業日の日付文字列(yyyy/MM/dd)。
 	 */
 	public static String nextWorkday(String date) {
+		if (calendarList == null) {
+			throw new InternalError("logic bug: must call initCalendar().");
+		}
 		return CalendarUtil.nextWorkday(calendarList, date);
 	}
 
