@@ -272,7 +272,6 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 */
 	public void readDbChartData(ChartDbRepository chartDbRepository) {
 		List<String> lines = chartDbRepository.lines(code, dbFileName);
-//		List<String> lines = FileUtil.readAllLines(dbFilePath);
 		int readCnt = 0;
 		for (String s : lines) {
 			if (s.startsWith("#")) {
@@ -298,36 +297,29 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 * @return チャートデータ。
 	 */
 	public List<String> readCsvChartData(ChartDataRepository chartDataRepository) {
-//		fileLockLogic.lockFile();
-		try {
-			List<String> lines;
-			lines = chartDataRepository.lines(name);
-//			lines = FileUtil.readAllLines(csvFilePath);
-			String prev = null;
-			for (int i = 0; i < lines.size(); i++) {
-				String s = lines.get(i);
-				String[] cols = StringUtil.splitComma(s);
-				String cur = cols[0];
-				if (prev != null && prev.compareTo(cur) > 0) { // 前のレコードと日時が反転している
-					String date = cur.substring(0, 10);
-					String time = cur.substring(11);
-					String prevTime = prev.substring(11);
-					if (time.startsWith("00:") && prevTime.startsWith("23:")) { // 2022-08-09 23:59:58から2022-08-09 00:00:00に戻る場合がある
-						date = DateUtil.nextDay(date.replaceAll("-", "/"));
-						date = date.replaceAll("/", "-") + " " + time;
-						String n = date + s.substring(19);
-						lines.set(i, n);
-						System.out.println("Warning: REPLACE line=" + s + ", new=" + date + ", prev=" + prev);
-					}
-					continue;
+		List<String> lines = chartDataRepository.lines(name);
+		String prev = null;
+		for (int i = 0; i < lines.size(); i++) {
+			String s = lines.get(i);
+			String[] cols = StringUtil.splitComma(s);
+			String cur = cols[0];
+			if (prev != null && prev.compareTo(cur) > 0) { // 前のレコードと日時が反転している
+				String date = cur.substring(0, 10);
+				String time = cur.substring(11);
+				String prevTime = prev.substring(11);
+				if (time.startsWith("00:") && prevTime.startsWith("23:")) { // 2022-08-09 23:59:58から2022-08-09 00:00:00に戻る場合がある
+					date = DateUtil.nextDay(date.replaceAll("-", "/"));
+					date = date.replaceAll("/", "-") + " " + time;
+					String n = date + s.substring(19);
+					lines.set(i, n);
+					System.out.println("Warning: REPLACE line=" + s + ", new=" + date + ", prev=" + prev);
 				}
-				prev = cur;
+				continue;
 			}
-			logger.info("readCsvChartData(" + name + "_" + bar + "): readCnt=" + lines.size());
-			return lines;
-		} finally {
-//			fileLockLogic.unlockFile();
+			prev = cur;
 		}
+		logger.info("readCsvChartData(" + name + "_" + bar + "): readCnt=" + lines.size());
+		return lines;
 	}
 
 	/**
