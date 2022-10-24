@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
 import server.repository.MergeDataRepository;
-import v45.MainMergeChartData_r17;
+import v38.MainMergeChartData_r10;
 
 @Service
-public class MergeChartDataService {
+public class MergeChartDataService_r10 {
 	/**
 	 * クラス。
 	 */
@@ -43,7 +43,7 @@ public class MergeChartDataService {
 		List<String> codes = chartDataRepository.list();
 		logger.info("execute(): " + codes);
 		for (String code : codes) {
-			new MainMergeChartData_r17(chartDataRepository, chartDbRepository, mergeDataRepository, code).execute();
+			new MainMergeChartData_r10(chartDataRepository, chartDbRepository, mergeDataRepository, code).execute();
 		}
 		return "OK";
 	}
