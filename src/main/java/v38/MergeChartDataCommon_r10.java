@@ -321,6 +321,9 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 */
 	private String readCsvChartLine(List<String> lines, int i, String prev) {
 		String s = lines.get(i);
+		if (s.startsWith("#")) {
+			return prev;
+		}
 		String[] cols = StringUtil.splitComma(s);
 		String cur = cols[0];
 		if (prev != null && prev.compareTo(cur) > 0) { // 前のレコードと日時が反転している
