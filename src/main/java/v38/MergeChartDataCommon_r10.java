@@ -257,12 +257,17 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 * @param chartDataRepository
 	 * @param chartDbRepository
 	 * @param mergeDataRepository
+	 * @param lines               チャートデータのリスト。
+	 * @return チャートデータのリスト。
 	 */
-	public void execute(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository, MergeDataRepository mergeDataRepository) {
+	public List<String> execute(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository, MergeDataRepository mergeDataRepository, List<String> lines) {
 		readDbChartData(chartDbRepository);
-		List<String> lines = readCsvChartData(chartDataRepository);
+		if (lines == null) {
+			lines = readCsvChartData(chartDataRepository);
+		}
 		mergeCsvChartData(lines);
 		writeChartMap(mergeDataRepository);
+		return lines;
 	}
 
 	/**
@@ -313,6 +318,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 					String n = date + s.substring(19);
 					lines.set(i, n);
 					System.out.println("Warning: REPLACE line=" + s + ", new=" + date + ", prev=" + prev);
+					System.out.println("Warning:     NEW line=" + n);
 				}
 				continue;
 			}

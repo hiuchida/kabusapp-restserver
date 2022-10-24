@@ -21,13 +21,15 @@ public interface MergeChartData_r10 {
 	public BarCode getCode();
 
 	/**
-	 * 保存した4本値チャートデータの終値と、PUSH APIで受信したチャートデータをマージする。
+	 * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージする。
 	 * 
 	 * @param chartDataRepository
 	 * @param chartDbRepository
 	 * @param mergeDataRepository
+	 * @param lines               チャートデータのリスト。
+	 * @return チャートデータのリスト。
 	 */
-	public void execute(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository, MergeDataRepository mergeDataRepository);
+	public List<String> execute(ChartDataRepository chartDataRepository, ChartDbRepository chartDbRepository, MergeDataRepository mergeDataRepository, List<String> lines);
 
 	/**
 	 * 1分足の4本値チャートＤＢファイルから終値を読み込む。

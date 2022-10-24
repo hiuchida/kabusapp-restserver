@@ -1,5 +1,6 @@
 package v38;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -43,12 +44,13 @@ public class MainMergeChartData_r10 {
 	}
 
 	/**
-	 * 保存した4本値チャートデータの終値と、PUSH APIで受信したチャートデータをマージする。
+	 * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージする。
 	 */
 	public void execute() {
+		List<String> lines = null;
 		for (String key : BarNameFactory_r10.getBarNames()) {
 			MergeChartData_r10 merge = mergeMap.get(key);
-			merge.execute(chartDataRepository, chartDbRepository, mergeDataRepository);
+			lines = merge.execute(chartDataRepository, chartDbRepository, mergeDataRepository, lines);
 		}
 	}
 
