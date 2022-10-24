@@ -31,9 +31,9 @@ public class ChartDataRepository {
 	 */
 	private static final String DIRPATH = "/tmp/server/chart/";
 	/**
-	 * チャートデータファイル名。
+	 * PUSH APIで受信したティックデータファイル名。
 	 */
-	private static final String DB_FILENAME = "ChartData.csv";
+	private static final String CHART_CSV_FILENAME = "ChartData.csv";
 
 	/**
 	 * 初期化済フラグ。
@@ -159,7 +159,7 @@ public class ChartDataRepository {
 		ChartDataLogic cdl = loadChartData(cd.code);
 		String dirpath = DIRPATH + cd.code;
 		FileUtil.mkdirs(dirpath);
-		String filepath = dirpath + "/" + DB_FILENAME;
+		String filepath = dirpath + "/" + CHART_CSV_FILENAME;
 		try (PrintWriter pw = FileUtil.writer(filepath, FileUtil.UTF8, true)) {
 			int writeCnt = 0;
 			for (String s : cd.list) {
@@ -182,7 +182,7 @@ public class ChartDataRepository {
 		ChartDataLogic cdl = loadChartData(cd.code);
 		String dirpath = DIRPATH + cd.code;
 		FileUtil.mkdirs(dirpath);
-		String filepath = dirpath + "/" + DB_FILENAME;
+		String filepath = dirpath + "/" + CHART_CSV_FILENAME;
 		try (PrintWriter pw = FileUtil.writer(filepath, FileUtil.UTF8, true)) {
 			int writeCnt = 0;
 			for (String s : cd.list) {
@@ -207,7 +207,7 @@ public class ChartDataRepository {
 		if (cdl != null) {
 			return cdl;
 		}
-		String filepath = DIRPATH + code + "/" + DB_FILENAME;
+		String filepath = DIRPATH + code + "/" + CHART_CSV_FILENAME;
 		List<String> lines = FileUtil.readAllLines(filepath);
 		cdl = new ChartDataLogic(code, lines);
 		chartMap.put(code, cdl);
