@@ -305,27 +305,39 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 		List<String> lines = chartDataRepository.lines(name);
 		String prev = null;
 		for (int i = 0; i < lines.size(); i++) {
-			String s = lines.get(i);
-			String[] cols = StringUtil.splitComma(s);
-			String cur = cols[0];
-			if (prev != null && prev.compareTo(cur) > 0) { // 前のレコードと日時が反転している
-				String date = cur.substring(0, 10);
-				String time = cur.substring(11);
-				String prevTime = prev.substring(11);
-				if (time.startsWith("00:") && prevTime.startsWith("23:")) { // 2022-08-09 23:59:58から2022-08-09 00:00:00に戻る場合がある
-					date = DateUtil.nextDay(date.replaceAll("-", "/"));
-					date = date.replaceAll("/", "-") + " " + time;
-					String n = date + s.substring(19);
-					lines.set(i, n);
-					System.out.println("Warning: REPLACE line=" + s + ", new=" + date + ", prev=" + prev);
-					System.out.println("Warning:     NEW line=" + n);
-				}
-				continue;
-			}
-			prev = cur;
+			prev = readCsvChartLine(lines, i, prev);
 		}
 		logger.info("readCsvChartData(" + name + "_" + bar + "): readCnt=" + lines.size());
 		return lines;
+	}
+
+	/**
+	 * PUSH APIで受信したチャートデータレコードから現値を読み込む。
+	 * 
+	 * @param lines チャートデータのリスト。
+	 * @param i     リストの添字。
+	 * @param prev  前のレコードの日付。
+	 * @return 前のレコードの日付。
+	 */
+	private String readCsvChartLine(List<String> lines, int i, String prev) {
+		String s = lines.get(i);
+		String[] cols = StringUtil.splitComma(s);
+		String cur = cols[0];
+		if (prev != null && prev.compareTo(cur) > 0) { // 前のレコードと日時が反転している
+			String date = cur.substring(0, 10);
+			String time = cur.substring(11);
+			String prevTime = prev.substring(11);
+			if (time.startsWith("00:") && prevTime.startsWith("23:")) { // 2022-08-09 23:59:58から2022-08-09 00:00:00に戻る場合がある
+				date = DateUtil.nextDay(date.replaceAll("-", "/"));
+				cur = date.replaceAll("/", "-") + " " + time;
+				String n = cur + s.substring(19);
+				lines.set(i, n);
+				System.out.println("Warning: REPLACE line=" + s + ", new=" + cur + ", prev=" + prev);
+				System.out.println("Warning:     NEW line=" + n);
+			}
+		}
+		prev = cur;
+		return prev;
 	}
 
 	/**
