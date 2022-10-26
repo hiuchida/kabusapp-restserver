@@ -6,7 +6,7 @@ import util.StringUtil;
 /**
  * イベントトリガー情報。
  */
-public class EventInfo_r11 {
+public class EventInfo_r11 implements Comparable<EventInfo_r11> {
 	/**
 	 * イベントトリガー情報のカラム数。
 	 */
@@ -78,7 +78,7 @@ public class EventInfo_r11 {
 	private String makeId(String name, String bar, String indicator, String date, String type) {
 		String d = date.substring(0, 4) + date.substring(5, 7) + date.substring(8, 10);
 		String t = date.substring(11, 13) + date.substring(14, 16) + date.substring(17, 19);
-		return name + "_" + bar + "_" + indicator + "_" + d + "_" + t + "_" + type;
+		return name + "_" + d + "_" + t + "_" + bar + "_" + indicator + "_" + type;
 	}
 
 	/**
@@ -99,6 +99,11 @@ public class EventInfo_r11 {
 		sa[i++] = report;
 		String val = StringUtil.joinTab(sa);
 		return val;
+	}
+
+	@Override
+	public int compareTo(EventInfo_r11 that) {
+		return this.id.compareTo(that.id);
 	}
 
 	@Override
