@@ -114,6 +114,21 @@ public class MergeChartInfo_r10 {
 	}
 
 	/**
+	 * コンストラクタ。
+	 * 
+	 * @param mci チャート情報。
+	 */
+	public MergeChartInfo_r10(MergeChartInfo_r10 mci) {
+		this.date = mci.date;
+		this.openPrice = mci.openPrice;
+		this.highPrice = mci.highPrice;
+		this.lowPrice = mci.lowPrice;
+		this.closePrice = mci.closePrice;
+		this.tradeVolume = mci.tradeVolume;
+		this.flag = mci.flag;
+	}
+
+	/**
 	 * マージしたチャートデータファイルのヘッダ文字列を生成する。
 	 * 
 	 * @return ヘッダ文字列。
