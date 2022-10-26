@@ -10,12 +10,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import bean.MergeChartInfo_r10;
+import bean.TriggerIndicatorInfo_r11;
 import server.repository.IndicatorDataRepository;
 import util.FileUtil;
 import util.StringUtil;
 import v38.factory.IndicatorCode;
-import v39.bean.EventInfo;
-import v39.bean.TriggerIndicatorInfo_r11;
+import v39.bean.EventInfo_r11;
 import v39.i.TriggerIndicator_r11;
 
 /**
@@ -66,7 +66,7 @@ public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11
 	/**
 	 * イベントトリガー情報のリスト。
 	 */
-	protected List<EventInfo> eventList = new ArrayList<>();
+	protected List<EventInfo_r11> eventList = new ArrayList<>();
 	/**
 	 * テクニカル指標のstdoutのファイル名。
 	 */
@@ -172,7 +172,7 @@ public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11
 	 * @param report レポート本文。
 	 */
 	protected void addEvent(String date, String type, String report) {
-		EventInfo event = new EventInfo(name, bar, getCode().toString(), date, type, report);
+		EventInfo_r11 event = new EventInfo_r11(name, bar, getCode().toString(), date, type, report);
 		eventList.add(event);
 	}
 
@@ -183,7 +183,7 @@ public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11
 	 */
 	private void printEvent(PrintWriter pw) {
 		int writeCnt = 0;
-		for (EventInfo event : eventList) {
+		for (EventInfo_r11 event : eventList) {
 			pw.println(event.toLineString());
 			writeCnt++;
 		}

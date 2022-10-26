@@ -6,7 +6,7 @@ import util.StringUtil;
 /**
  * イベントトリガー情報。
  */
-public class EventInfo {
+public class EventInfo_r11 {
 	/**
 	 * イベントトリガー情報のカラム数。
 	 */
@@ -54,7 +54,7 @@ public class EventInfo {
 	 * @param type      トリガー種別。
 	 * @param report    レポート本文。
 	 */
-	public EventInfo(String name, String bar, String indicator, String date, String type, String report) {
+	public EventInfo_r11(String name, String bar, String indicator, String date, String type, String report) {
 		this.id = makeId(name, bar, indicator, date, type);
 		this.createDate = DateTimeUtil.nowToString();
 		this.name = name;

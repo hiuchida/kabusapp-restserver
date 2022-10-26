@@ -1,6 +1,5 @@
-package v39.bean;
+package bean;
 
-import bean.CalcIndicatorInfo_r10;
 import util.StringUtil;
 
 /**

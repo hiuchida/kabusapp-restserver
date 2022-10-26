@@ -1,8 +1,8 @@
 package v39.t;
 
+import bean.TriggerIndicatorInfo_r11;
 import v38.factory.IndicatorCode;
 import v39.TriggerIndicatorCommon_r11;
-import v39.bean.TriggerIndicatorInfo_r11;
 import v39.i.TriggerIndicator_r11;
 
 /**

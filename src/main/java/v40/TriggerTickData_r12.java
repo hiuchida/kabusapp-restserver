@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import server.repository.ChartDataRepository;
 import util.FileUtil;
 import util.StringUtil;
-import v39.bean.EventInfo;
+import v39.bean.EventInfo_r11;
 
 /**
  * ティックデータからイベントトリガーを発火するクラス。
@@ -71,7 +71,7 @@ public class TriggerTickData_r12 {
 	/**
 	 * イベントトリガー情報のリスト。
 	 */
-	private List<EventInfo> eventList = new ArrayList<>();
+	private List<EventInfo_r11> eventList = new ArrayList<>();
 
 	/**
 	 * コンストラクタ。
@@ -163,7 +163,7 @@ public class TriggerTickData_r12 {
 	 * @param report レポート本文。
 	 */
 	private void addEvent(String date, String type, String report) {
-		EventInfo event = new EventInfo(name, TICK, TICK_CODE, date, type, report);
+		EventInfo_r11 event = new EventInfo_r11(name, TICK, TICK_CODE, date, type, report);
 		eventList.add(event);
 	}
 
@@ -174,7 +174,7 @@ public class TriggerTickData_r12 {
 	 */
 	private void printEvent(PrintWriter pw) {
 		int writeCnt = 0;
-		for (EventInfo event : eventList) {
+		for (EventInfo_r11 event : eventList) {
 			pw.println(event.toLineString());
 			writeCnt++;
 		}
