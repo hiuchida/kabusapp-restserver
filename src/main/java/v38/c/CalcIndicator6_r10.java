@@ -2,9 +2,9 @@ package v38.c;
 
 import java.util.List;
 
+import bean.CalcIndicatorInfo_r10;
 import bean.MergeChartInfo_r10;
 import v38.CalcIndicatorCommon_r10;
-import v38.bean.CalcIndicatorInfo_r10;
 import v38.factory.IndicatorCode;
 import v38.i.CalcIndicator_r10;
 

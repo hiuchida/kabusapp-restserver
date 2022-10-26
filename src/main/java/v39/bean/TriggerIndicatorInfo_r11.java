@@ -1,7 +1,7 @@
 package v39.bean;
 
+import bean.CalcIndicatorInfo_r10;
 import util.StringUtil;
-import v38.bean.CalcIndicatorInfo_r10;
 
 /**
  * テクニカル指標を計算した結果のテクニカル指標情報クラス。
