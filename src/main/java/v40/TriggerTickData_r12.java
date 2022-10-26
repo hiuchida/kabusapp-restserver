@@ -111,6 +111,15 @@ public class TriggerTickData_r12 {
 			if (s.startsWith("#")) {
 				continue;
 			}
+			// カラム1にクライアントのタイムスタンプが含まれている場合、データ本体はカラム2以降
+			if (s.length() > 8 && s.charAt(4) == '/' && s.charAt(7) == '/') {
+				String[] cols = StringUtil.splitComma(s);
+				String[] newCols = new String[cols.length - 1];
+				for (int i = 0; i < newCols.length; i++) {
+					newCols[i] = cols[i + 1];
+				}
+				s = StringUtil.joinComma(newCols);
+			}
 			chartList.add(s);
 		}
 		removeOld();
