@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import bean.MergeChartInfo_r10;
 import logic.CalendarLogic;
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
@@ -18,7 +19,6 @@ import util.DateTimeUtil;
 import util.DateUtil;
 import util.StringUtil;
 import v38.factory.BarCode;
-import v45.bean.MergeChartInfo_r17;
 import v45.i.MergeChartData_r17;
 
 /**
@@ -61,7 +61,7 @@ public abstract class MergeChartDataCommon_r17 implements MergeChartData_r17 {
 	/**
 	 * マージしたチャートデータを時系列に並べたマップ。
 	 */
-	protected Map<String, MergeChartInfo_r17> chartMap = new TreeMap<>();
+	protected Map<String, MergeChartInfo_r10> chartMap = new TreeMap<>();
 	/**
 	 * マージしたチャートデータファイル名。
 	 */
@@ -158,9 +158,9 @@ public abstract class MergeChartDataCommon_r17 implements MergeChartData_r17 {
 						}
 						continue;
 					}
-					MergeChartInfo_r17 mci = chartMap.get(key);
+					MergeChartInfo_r10 mci = chartMap.get(key);
 					if (mci == null) {
-						mci = new MergeChartInfo_r17(key);
+						mci = new MergeChartInfo_r10(key);
 						chartMap.put(key, mci);
 						addCnt++;
 //						System.out.println(addCnt + ": " + key);
@@ -184,9 +184,9 @@ public abstract class MergeChartDataCommon_r17 implements MergeChartData_r17 {
 						}
 						continue;
 					}
-					MergeChartInfo_r17 mci = chartMap.get(key);
+					MergeChartInfo_r10 mci = chartMap.get(key);
 					if (mci == null) {
-						mci = new MergeChartInfo_r17(key);
+						mci = new MergeChartInfo_r10(key);
 						chartMap.put(key, mci);
 						addCnt++;
 //						System.out.println(addCnt + ": " + key);
@@ -209,10 +209,10 @@ public abstract class MergeChartDataCommon_r17 implements MergeChartData_r17 {
 	private void copyFromPrev() {
 		List<String> keys = new ArrayList<>(chartMap.keySet());
 		for (int i = 1; i < chartMap.size(); i++) {
-			MergeChartInfo_r17 mci = chartMap.get(keys.get(i));
+			MergeChartInfo_r10 mci = chartMap.get(keys.get(i));
 			if (mci.flag == 0) {
-				MergeChartInfo_r17 prev = chartMap.get(keys.get(i - 1));
-				mci = new MergeChartInfo_r17(mci.date, prev.closePrice, 0, 3);
+				MergeChartInfo_r10 prev = chartMap.get(keys.get(i - 1));
+				mci = new MergeChartInfo_r10(mci.date, prev.closePrice, 0, 3);
 				chartMap.put(mci.date, mci);
 			}
 		}
@@ -283,11 +283,11 @@ public abstract class MergeChartDataCommon_r17 implements MergeChartData_r17 {
 				continue;
 			}
 			String[] cols = StringUtil.splitComma(s);
-			if (cols.length != MergeChartInfo_r17.MAX_DB_COLS) {
+			if (cols.length != MergeChartInfo_r10.MAX_DB_COLS) {
 				System.out.println("Warning: SKIP cols.length=" + cols.length + ", line=" + s);
 				continue;
 			}
-			MergeChartInfo_r17 mci = new MergeChartInfo_r17(cols);
+			MergeChartInfo_r10 mci = new MergeChartInfo_r10(cols);
 			String key = mci.getKey();
 			chartMap.put(key, mci);
 			readCnt++;
@@ -398,9 +398,9 @@ public abstract class MergeChartDataCommon_r17 implements MergeChartData_r17 {
 				continue;
 			}
 			String key = date + " " + startTime;
-			MergeChartInfo_r17 mci = chartMap.get(key);
+			MergeChartInfo_r10 mci = chartMap.get(key);
 			if (mci == null) {
-				mci = new MergeChartInfo_r17(key, price, volume);
+				mci = new MergeChartInfo_r10(key, price, volume);
 				chartMap.put(key, mci);
 				updateCnt++;
 			} else {
@@ -435,10 +435,10 @@ public abstract class MergeChartDataCommon_r17 implements MergeChartData_r17 {
 	 */
 	public void writeChartMap(MergeDataRepository mergeDataRepository) {
 		List<String> lines = new ArrayList<>();
-		lines.add(MergeChartInfo_r17.toHeaderString());
+		lines.add(MergeChartInfo_r10.toHeaderString());
 		logger.info("writeChartMap(" + name + "_" + bar + "): chartMap.size=" + chartMap.size());
 		for (String key : chartMap.keySet()) {
-			MergeChartInfo_r17 mci = chartMap.get(key);
+			MergeChartInfo_r10 mci = chartMap.get(key);
 			lines.add(mci.toLineString());
 		}
 		mergeDataRepository.writeAllLines(name, txtFileName, lines);
@@ -488,7 +488,7 @@ public abstract class MergeChartDataCommon_r17 implements MergeChartData_r17 {
 	 * 
 	 * @return マージしたチャートデータのマップ。
 	 */
-	public Map<String, MergeChartInfo_r17> getChartMap() {
+	public Map<String, MergeChartInfo_r10> getChartMap() {
 		return chartMap;
 	}
 

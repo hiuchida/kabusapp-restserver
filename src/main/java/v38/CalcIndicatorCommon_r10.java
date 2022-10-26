@@ -7,9 +7,9 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import bean.MergeChartInfo_r10;
 import server.repository.IndicatorDataRepository;
 import v38.bean.CalcIndicatorInfo_r10;
-import v38.bean.MergeChartInfo_r10;
 import v38.factory.IndicatorCode;
 import v38.i.CalcIndicator_r10;
 

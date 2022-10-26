@@ -2,8 +2,8 @@ package v39.i;
 
 import java.util.List;
 
+import bean.MergeChartInfo_r10;
 import server.repository.IndicatorDataRepository;
-import v38.bean.MergeChartInfo_r10;
 import v38.factory.IndicatorCode;
 
 /**

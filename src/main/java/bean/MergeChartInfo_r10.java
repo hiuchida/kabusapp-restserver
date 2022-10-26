@@ -1,4 +1,4 @@
-package v38.bean;
+package bean;
 
 import util.StringUtil;
 

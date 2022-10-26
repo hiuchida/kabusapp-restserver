@@ -3,10 +3,10 @@ package v38.i;
 import java.util.List;
 import java.util.Map;
 
+import bean.MergeChartInfo_r10;
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
 import server.repository.MergeDataRepository;
-import v38.bean.MergeChartInfo_r10;
 import v38.factory.BarCode;
 
 /**

@@ -7,10 +7,10 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import bean.MergeChartInfo_r10;
 import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
 import util.StringUtil;
-import v38.bean.MergeChartInfo_r10;
 import v39.factory.TriggerIndicatorFactory_r11;
 import v39.i.TriggerIndicator_r11;
 

@@ -1,5 +1,7 @@
 package v38.bean;
 
+import bean.MergeChartInfo_r10;
+
 /**
  * テクニカル指標を計算した結果のテクニカル指標情報クラス。
  */

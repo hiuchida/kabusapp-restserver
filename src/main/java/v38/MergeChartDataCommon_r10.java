@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import bean.MergeChartInfo_r10;
 import logic.CalendarLogic;
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
@@ -17,7 +18,6 @@ import server.repository.MergeDataRepository;
 import util.DateTimeUtil;
 import util.DateUtil;
 import util.StringUtil;
-import v38.bean.MergeChartInfo_r10;
 import v38.factory.BarCode;
 import v38.i.MergeChartData_r10;
 
