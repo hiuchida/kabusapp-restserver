@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import server.repository.ChartDataRepository;
-import v40.MainTriggerTickData_r12;
+import v45.MainTriggerTickData_r17;
 
 @Service
 public class TriggerTickService {
@@ -34,7 +34,7 @@ public class TriggerTickService {
 		List<String> codes = chartDataRepository.list();
 		logger.info("execute(): " + codes);
 		for (String code : codes) {
-			new MainTriggerTickData_r12(chartDataRepository, code).execute();
+			new MainTriggerTickData_r17(chartDataRepository, code).execute();
 		}
 		return "OK";
 	}

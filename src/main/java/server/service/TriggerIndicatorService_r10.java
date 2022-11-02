@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
-import v45.MainTriggerIndicator_r17;
+import v39.MainTriggerIndicator_r11;
 
 @Service
-public class TriggerIndicatorService {
+public class TriggerIndicatorService_r10 {
 	/**
 	 * クラス。
 	 */
@@ -38,7 +38,7 @@ public class TriggerIndicatorService {
 		List<String> codes = mergeDataRepository.list();
 		logger.info("execute(): " + codes);
 		for (String code : codes) {
-			new MainTriggerIndicator_r17(mergeDataRepository, indicatorDataRepository, code).execute();
+			new MainTriggerIndicator_r11(mergeDataRepository, indicatorDataRepository, code).execute();
 		}
 		return "OK";
 	}
