@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
-import v45.MainCalcIndicator_r17;
+import v38.MainCalcIndicator_r10;
 
 @Service
-public class CalcIndicatorService {
+public class CalcIndicatorService_r10 {
 	/**
 	 * クラス。
 	 */
@@ -38,7 +38,7 @@ public class CalcIndicatorService {
 		List<String> codes = mergeDataRepository.list();
 		logger.info("execute(): " + codes);
 		for (String code : codes) {
-			new MainCalcIndicator_r17(mergeDataRepository, indicatorDataRepository, code).execute();
+			new MainCalcIndicator_r10(mergeDataRepository, indicatorDataRepository, code).execute();
 		}
 		return "OK";
 	}
