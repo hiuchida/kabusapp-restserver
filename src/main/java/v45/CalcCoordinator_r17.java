@@ -13,8 +13,8 @@ import bean.MergeChartInfo_r10;
 import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
 import util.StringUtil;
-import v38.factory.CalcIndicatorFactory_r10;
-import v38.i.CalcIndicator_r10;
+import v45.factory.CalcIndicatorFactory_r17;
+import v45.i.CalcIndicator_r17;
 
 /**
  * テクニカル指標を計算するクラス。
@@ -52,7 +52,7 @@ public class CalcCoordinator_r17 {
 	/**
 	 * テクニカル指標を計算するクラス。
 	 */
-	private List<CalcIndicator_r10> calcList = new ArrayList<>();
+	private List<CalcIndicator_r17> calcList = new ArrayList<>();
 
 	/**
 	 * コンストラクタ。
@@ -64,7 +64,7 @@ public class CalcCoordinator_r17 {
 		this.name = name;
 		this.bar = bar;
 		this.txtFileName = String.format(CHART_TXT_FILENAME, bar);
-		this.calcList = CalcIndicatorFactory_r10.create(name, bar);
+		this.calcList = CalcIndicatorFactory_r17.create(name, bar);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class CalcCoordinator_r17 {
 	 */
 	public void execute(MergeDataRepository mergeDataRepository, IndicatorDataRepository indicatorDataRepository) {
 		readChartData(mergeDataRepository);
-		for (CalcIndicator_r10 ci : calcList) {
+		for (CalcIndicator_r17 ci : calcList) {
 			ci.execute(chartList, indicatorDataRepository);
 		}
 	}
@@ -107,9 +107,9 @@ public class CalcCoordinator_r17 {
 	 * 
 	 * @return テクニカル指標を計算するクラスのリスト。
 	 */
-	public Map<Integer, CalcIndicator_r10> getCalcMap() {
-		Map<Integer, CalcIndicator_r10> calcMap = new TreeMap<>();
-		for (CalcIndicator_r10 ci : calcList) {
+	public Map<Integer, CalcIndicator_r17> getCalcMap() {
+		Map<Integer, CalcIndicator_r17> calcMap = new TreeMap<>();
+		for (CalcIndicator_r17 ci : calcList) {
 			calcMap.put(ci.getCode().intValue(), ci);
 		}
 		return calcMap;
