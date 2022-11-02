@@ -27,7 +27,7 @@ public class CalcIndicatorFactory_r17 {
 	 */
 	static {
 		try {
-			InputStream is = CalcIndicatorFactory_r17.class.getResourceAsStream("CalcIndicatorFactory_r10.properties");
+			InputStream is = CalcIndicatorFactory_r17.class.getResourceAsStream("CalcIndicatorFactory_r17.properties");
 			Properties prop = new Properties();
 			prop.load(is);
 			Map<Integer, String> map = new TreeMap<>();
