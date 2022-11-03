@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import bean.MergeChartInfo_r10;
 import bean.TriggerIndicatorInfo_r11;
 import server.repository.IndicatorDataRepository;
+import util.AppCommon;
 import util.FileUtil;
 import util.StringUtil;
 import v38.factory.IndicatorCode;
@@ -21,7 +22,7 @@ import v39.i.TriggerIndicator_r11;
 /**
  * テクニカル指標からイベントトリガーを発火する抽象クラス。
  */
-public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11 {
+public abstract class TriggerIndicatorCommon_r11 extends AppCommon implements TriggerIndicator_r11 {
 	/**
 	 * クラス。
 	 */
@@ -30,14 +31,7 @@ public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11
 	 * ロガー。
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
-	/**
-	 * 基準パス。
-	 */
-	private static final String SERVER_DIRPATH = "/tmp/server/";
-	/**
-	 * チャートデータディレクトリパス。
-	 */
-	private static final String SERVER_DIR_CHARTPATH = SERVER_DIRPATH + "chart/";
+
 	/**
 	 * テクニカル指標のstdoutのファイル名。
 	 */
@@ -107,9 +101,9 @@ public abstract class TriggerIndicatorCommon_r11 implements TriggerIndicator_r11
 	public TriggerIndicatorCommon_r11(String name, String bar, int maxValues, String type) {
 		this.name = name;
 		this.bar = bar;
-		String dirChartPath = SERVER_DIR_CHARTPATH + name;
+		String chartDirPath = SERVER_CHART_DIR_PATH + name + "/";
 		this.indicatorFileName = String.format(CALC_FILENAME, bar, getCode().intValue());
-		this.outFilePath = dirChartPath + "/" + String.format(OUT_FILENAME, bar, getCode().intValue());
+		this.outFilePath = chartDirPath + String.format(OUT_FILENAME, bar, getCode().intValue());
 		this.maxValues = maxValues;
 		this.type = type;
 	}

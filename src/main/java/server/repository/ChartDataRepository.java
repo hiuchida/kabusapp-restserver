@@ -14,10 +14,11 @@ import org.springframework.stereotype.Repository;
 
 import server.logic.ChartDataLogic;
 import server.model.ChartData;
+import util.AppCommon;
 import util.FileUtil;
 
 @Repository
-public class ChartDataRepository {
+public class ChartDataRepository extends AppCommon {
 	/**
 	 * クラス。
 	 */
@@ -26,14 +27,6 @@ public class ChartDataRepository {
 	 * ロガー。
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
-	/**
-	 * 基準パス。
-	 */
-	private static final String DIRPATH = "/tmp/server/chart/";
-	/**
-	 * PUSH APIで受信したティックデータファイル名。
-	 */
-	private static final String CHART_CSV_FILENAME = "ChartData.csv";
 
 	/**
 	 * 初期化済フラグ。
@@ -116,7 +109,7 @@ public class ChartDataRepository {
 			return;
 		}
 		bInit = true;
-		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		List<String> dirs = FileUtil.listDirs(SERVER_CHART_DIR_PATH);
 		logger.info("load(): " + dirs);
 		for (String code : dirs) {
 			loadChartData(code);
@@ -128,7 +121,7 @@ public class ChartDataRepository {
 	 */
 	public synchronized void refresh() {
 		bInit = true;
-		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		List<String> dirs = FileUtil.listDirs(SERVER_CHART_DIR_PATH);
 		logger.info("refresh(): " + dirs);
 		for (String code : dirs) {
 			loadChartData(code);
@@ -141,7 +134,7 @@ public class ChartDataRepository {
 	public synchronized void reload() {
 		bInit = true;
 		chartMap.clear();
-		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		List<String> dirs = FileUtil.listDirs(SERVER_CHART_DIR_PATH);
 		logger.info("reload(): " + dirs);
 		for (String code : dirs) {
 			loadChartData(code);
@@ -157,7 +150,7 @@ public class ChartDataRepository {
 	 */
 	public synchronized int append(ChartData cd) throws IOException {
 		ChartDataLogic cdl = loadChartData(cd.code);
-		String dirpath = DIRPATH + cd.code;
+		String dirpath = SERVER_CHART_DIR_PATH + cd.code;
 		FileUtil.mkdirs(dirpath);
 		String filepath = dirpath + "/" + CHART_CSV_FILENAME;
 		try (PrintWriter pw = FileUtil.writer(filepath, FileUtil.UTF8, true)) {
@@ -180,7 +173,7 @@ public class ChartDataRepository {
 	 */
 	public synchronized int update(ChartData cd) throws IOException {
 		ChartDataLogic cdl = loadChartData(cd.code);
-		String dirpath = DIRPATH + cd.code;
+		String dirpath = SERVER_CHART_DIR_PATH + cd.code;
 		FileUtil.mkdirs(dirpath);
 		String filepath = dirpath + "/" + CHART_CSV_FILENAME;
 		try (PrintWriter pw = FileUtil.writer(filepath, FileUtil.UTF8, true)) {
@@ -207,7 +200,7 @@ public class ChartDataRepository {
 		if (cdl != null) {
 			return cdl;
 		}
-		String filepath = DIRPATH + code + "/" + CHART_CSV_FILENAME;
+		String filepath = SERVER_CHART_DIR_PATH + code + "/" + CHART_CSV_FILENAME;
 		List<String> lines = FileUtil.readAllLines(filepath);
 		cdl = new ChartDataLogic(code, lines);
 		chartMap.put(code, cdl);

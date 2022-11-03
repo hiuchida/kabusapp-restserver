@@ -10,13 +10,14 @@ import org.apache.commons.logging.LogFactory;
 import bean.CalcIndicatorInfo_r10;
 import bean.MergeChartInfo_r10;
 import server.repository.IndicatorDataRepository;
+import util.AppCommon;
 import v38.factory.IndicatorCode;
 import v45.i.CalcIndicator_r17;
 
 /**
  * テクニカル指標を計算する抽象クラス。
  */
-public abstract class CalcIndicatorCommon_r17 implements CalcIndicator_r17 {
+public abstract class CalcIndicatorCommon_r17 extends AppCommon implements CalcIndicator_r17 {
 	/**
 	 * クラス。
 	 */

@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import bean.MergeChartInfo_r10;
 import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
+import util.AppCommon;
 import util.StringUtil;
 import v38.factory.CalcIndicatorFactory_r10;
 import v38.i.CalcIndicator_r10;
@@ -19,7 +20,7 @@ import v38.i.CalcIndicator_r10;
 /**
  * テクニカル指標を計算するクラス。
  */
-public class CalcCoordinator_r10 {
+public class CalcCoordinator_r10 extends AppCommon {
 	/**
 	 * クラス。
 	 */
@@ -28,6 +29,7 @@ public class CalcCoordinator_r10 {
 	 * ロガー。
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
+
 	/**
 	 * マージしたチャートデータファイル名。
 	 */

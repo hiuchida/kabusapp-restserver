@@ -13,10 +13,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
 import server.logic.IndicatorDataLogic;
+import util.AppCommon;
 import util.StringUtil;
 
 @Repository
-public class IndicatorDataRepository {
+public class IndicatorDataRepository extends AppCommon {
 	/**
 	 * クラス。
 	 */

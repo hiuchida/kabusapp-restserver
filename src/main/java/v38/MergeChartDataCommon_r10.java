@@ -15,6 +15,7 @@ import logic.CalendarLogic;
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
 import server.repository.MergeDataRepository;
+import util.AppCommon;
 import util.DateTimeUtil;
 import util.DateUtil;
 import util.StringUtil;
@@ -24,7 +25,7 @@ import v38.i.MergeChartData_r10;
 /**
  * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージした4本値と売買高を出力する抽象クラス。
  */
-public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
+public abstract class MergeChartDataCommon_r10 extends AppCommon implements MergeChartData_r10 {
 	/**
 	 * クラス。
 	 */
@@ -33,6 +34,7 @@ public abstract class MergeChartDataCommon_r10 implements MergeChartData_r10 {
 	 * ロガー。
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
+
 	/**
 	 * 4本値チャートＤＢファイル名。
 	 */

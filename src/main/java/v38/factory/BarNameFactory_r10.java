@@ -6,12 +6,13 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
+import util.AppCommon;
 import util.StringUtil;
 
 /**
  * 足名の一覧のファクトリー。
  */
-public class BarNameFactory_r10 {
+public class BarNameFactory_r10 extends AppCommon {
 	/**
 	 * 足名の一覧。
 	 */

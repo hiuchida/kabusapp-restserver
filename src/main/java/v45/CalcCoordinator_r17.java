@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import bean.MergeChartInfo_r10;
 import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
+import util.AppCommon;
 import util.StringUtil;
 import v45.factory.CalcIndicatorFactory_r17;
 import v45.i.CalcIndicator_r17;
@@ -19,7 +20,7 @@ import v45.i.CalcIndicator_r17;
 /**
  * テクニカル指標を計算するクラス。
  */
-public class CalcCoordinator_r17 {
+public class CalcCoordinator_r17 extends AppCommon {
 	/**
 	 * クラス。
 	 */

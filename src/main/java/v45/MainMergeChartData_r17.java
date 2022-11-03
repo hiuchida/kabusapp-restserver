@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
 import server.repository.MergeDataRepository;
+import util.AppCommon;
 import v38.factory.BarNameFactory_r10;
 import v45.factory.MergeChartDataFactory_r17;
 import v45.i.MergeChartData_r17;
@@ -14,7 +15,7 @@ import v45.i.MergeChartData_r17;
 /**
  * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージした4本値と売買高を出力するツール。
  */
-public class MainMergeChartData_r17 {
+public class MainMergeChartData_r17 extends AppCommon {
 
 	private ChartDataRepository chartDataRepository;
 

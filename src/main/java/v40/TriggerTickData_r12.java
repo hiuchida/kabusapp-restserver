@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import server.repository.ChartDataRepository;
+import util.AppCommon;
 import util.FileUtil;
 import util.StringUtil;
 import v39.bean.EventInfo_r11;
@@ -17,7 +18,7 @@ import v39.bean.EventInfo_r11;
 /**
  * ティックデータからイベントトリガーを発火するクラス。
  */
-public class TriggerTickData_r12 {
+public class TriggerTickData_r12 extends AppCommon {
 	/**
 	 * 足名：ティック。
 	 */
@@ -43,14 +44,7 @@ public class TriggerTickData_r12 {
 	 * ロガー。
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
-	/**
-	 * 基準パス。
-	 */
-	private static final String SERVER_DIRPATH = "/tmp/server/";
-	/**
-	 * ティックデータディレクトリパス。
-	 */
-	private static final String SERVER_DIR_CHARTPATH = SERVER_DIRPATH + "chart/";
+
 	/**
 	 * イベントトリガーのstdoutのファイル名。
 	 */
@@ -80,8 +74,8 @@ public class TriggerTickData_r12 {
 	 */
 	public TriggerTickData_r12(String name) {
 		this.name = name;
-		String dirChartPath = SERVER_DIR_CHARTPATH + name;
-		this.outFilePath = dirChartPath + "/" + OUT_FILENAME;
+		String chartDirPath = SERVER_CHART_DIR_PATH + name + "/";
+		this.outFilePath = chartDirPath + OUT_FILENAME;
 	}
 
 	/**

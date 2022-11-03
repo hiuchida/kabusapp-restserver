@@ -16,6 +16,8 @@
 
 package server;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -30,6 +32,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 
 import server.prop.KabusapisrvProperties;
+import util.Consts;
+import util.ErrorLog;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -39,6 +43,7 @@ public class SampleTomcatApplication extends SpringBootServletInitializer {
 	private static Log logger = LogFactory.getLog(SampleTomcatApplication.class);
 
 	public static void main(String[] args) throws Exception {
+		ErrorLog.init(MethodHandles.lookup().lookupClass(), Consts.VERSION);
 		SpringApplication.run(SampleTomcatApplication.class, args);
 	}
 

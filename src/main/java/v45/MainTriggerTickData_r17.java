@@ -1,11 +1,12 @@
 package v45;
 
 import server.repository.ChartDataRepository;
+import util.AppCommon;
 
 /**
  * ティックデータからイベントトリガーを発火するクラス。
  */
-public class MainTriggerTickData_r17 {
+public class MainTriggerTickData_r17 extends AppCommon {
 
 	private ChartDataRepository chartDataRepository;
 

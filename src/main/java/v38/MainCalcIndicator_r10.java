@@ -5,12 +5,13 @@ import java.util.List;
 
 import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
+import util.AppCommon;
 import v38.factory.BarNameFactory_r10;
 
 /**
  * テクニカル指標を計算するクラス。
  */
-public class MainCalcIndicator_r10 {
+public class MainCalcIndicator_r10 extends AppCommon {
 
 	private MergeDataRepository mergeDataRepository;
 

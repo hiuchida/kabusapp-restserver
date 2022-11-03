@@ -10,13 +10,14 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
+import util.AppCommon;
 import util.StringUtil;
 import v39.i.TriggerIndicator_r11;
 
 /**
  * テクニカル指標からイベントトリガーを発火するクラスのファクトリー。
  */
-public class TriggerIndicatorFactory_r11 {
+public class TriggerIndicatorFactory_r11 extends AppCommon {
 	/**
 	 * テクニカル指標からイベントトリガーを発火するクラス名の一覧。
 	 */

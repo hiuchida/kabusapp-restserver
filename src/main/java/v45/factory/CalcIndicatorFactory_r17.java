@@ -10,13 +10,14 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
+import util.AppCommon;
 import util.StringUtil;
 import v45.i.CalcIndicator_r17;
 
 /**
  * テクニカル指標を計算するクラスのファクトリー。
  */
-public class CalcIndicatorFactory_r17 {
+public class CalcIndicatorFactory_r17 extends AppCommon {
 	/**
 	 * テクニカル指標計算クラス名の一覧。
 	 */

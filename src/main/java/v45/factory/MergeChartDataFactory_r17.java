@@ -8,13 +8,14 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
+import util.AppCommon;
 import v38.factory.BarNameFactory_r10;
 import v45.i.MergeChartData_r17;
 
 /**
  * チャートデータをマージするクラスのファクトリー。
  */
-public class MergeChartDataFactory_r17 {
+public class MergeChartDataFactory_r17 extends AppCommon {
 	/**
 	 * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージした4本値を出力するクラス名のマップ。
 	 */

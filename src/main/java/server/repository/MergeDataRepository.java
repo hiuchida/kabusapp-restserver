@@ -13,10 +13,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
 import server.logic.MergeDataLogic;
+import util.AppCommon;
 import util.StringUtil;
 
 @Repository
-public class MergeDataRepository {
+public class MergeDataRepository extends AppCommon {
 	/**
 	 * クラス。
 	 */

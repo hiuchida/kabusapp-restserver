@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import bean.MergeChartInfo_r10;
 import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
+import util.AppCommon;
 import util.StringUtil;
 import v45.factory.TriggerIndicatorFactory_r17;
 import v45.i.TriggerIndicator_r17;
@@ -17,7 +18,7 @@ import v45.i.TriggerIndicator_r17;
 /**
  * テクニカル指標からイベントトリガーを発火するクラス。
  */
-public class TriggerCoordinator_r17 {
+public class TriggerCoordinator_r17 extends AppCommon {
 	/**
 	 * クラス。
 	 */
@@ -26,6 +27,7 @@ public class TriggerCoordinator_r17 {
 	 * ロガー。
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
+
 	/**
 	 * マージしたチャートデータファイル名。
 	 */

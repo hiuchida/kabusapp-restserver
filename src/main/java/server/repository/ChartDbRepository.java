@@ -15,10 +15,11 @@ import org.springframework.stereotype.Repository;
 import logic.CalendarLogic;
 import server.logic.ChartDbLogic;
 import server.model.ChartDb;
+import util.AppCommon;
 import util.FileUtil;
 
 @Repository
-public class ChartDbRepository {
+public class ChartDbRepository extends AppCommon {
 	/**
 	 * クラス。
 	 */
@@ -27,10 +28,6 @@ public class ChartDbRepository {
 	 * ロガー。
 	 */
 	private static Log logger = LogFactory.getLog(clazz);
-	/**
-	 * 基準パス。
-	 */
-	private static final String DIRPATH = "/tmp/server/db/";
 
 	/**
 	 * 初期化済フラグ。
@@ -119,10 +116,10 @@ public class ChartDbRepository {
 			List<String> lines = cdl.list();
 			CalendarLogic.initCalendar(lines);
 		}
-		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		List<String> dirs = FileUtil.listDirs(SERVER_DB_DIR_PATH);
 		logger.info("load(): " + dirs);
 		for (String code : dirs) {
-			List<String> files = FileUtil.listFiles(DIRPATH + code);
+			List<String> files = FileUtil.listFiles(SERVER_DB_DIR_PATH + code);
 			logger.info("load(" + code + "): " + files);
 			for (String name : files) {
 				loadChartDb(code, name);
@@ -140,10 +137,10 @@ public class ChartDbRepository {
 			List<String> lines = cdl.list();
 			CalendarLogic.initCalendar(lines);
 		}
-		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		List<String> dirs = FileUtil.listDirs(SERVER_DB_DIR_PATH);
 		logger.info("refresh(): " + dirs);
 		for (String code : dirs) {
-			List<String> files = FileUtil.listFiles(DIRPATH + code);
+			List<String> files = FileUtil.listFiles(SERVER_DB_DIR_PATH + code);
 			logger.info("refresh(" + code + "): " + files);
 			for (String name : files) {
 				loadChartDb(code, name);
@@ -162,10 +159,10 @@ public class ChartDbRepository {
 			List<String> lines = cdl.list();
 			CalendarLogic.initCalendar(lines);
 		}
-		List<String> dirs = FileUtil.listDirs(DIRPATH);
+		List<String> dirs = FileUtil.listDirs(SERVER_DB_DIR_PATH);
 		logger.info("reload(): " + dirs);
 		for (String code : dirs) {
-			List<String> files = FileUtil.listFiles(DIRPATH + code);
+			List<String> files = FileUtil.listFiles(SERVER_DB_DIR_PATH + code);
 			logger.info("reload(" + code + "): " + files);
 			for (String name : files) {
 				loadChartDb(code, name);
@@ -185,12 +182,12 @@ public class ChartDbRepository {
 		cdl.clear();
 		String filepath;
 		if (cd.code.length() > 0) {
-			String dirpath = DIRPATH + cd.code;
+			String dirpath = SERVER_DB_DIR_PATH + cd.code;
 			FileUtil.mkdirs(dirpath);
 			filepath = dirpath + "/" + cd.filename;
 		} else {
-			FileUtil.mkdirs(DIRPATH);
-			filepath = DIRPATH + cd.filename;
+			FileUtil.mkdirs(SERVER_DB_DIR_PATH);
+			filepath = SERVER_DB_DIR_PATH + cd.filename;
 		}
 		try (PrintWriter pw = FileUtil.writer(filepath, FileUtil.UTF8)) {
 			int writeCnt = 0;
@@ -221,10 +218,10 @@ public class ChartDbRepository {
 		}
 		String filepath;
 		if (code.length() > 0) {
-			String dirpath = DIRPATH + code;
+			String dirpath = SERVER_DB_DIR_PATH + code;
 			filepath = dirpath + "/" + filename;
 		} else {
-			filepath = DIRPATH + filename;
+			filepath = SERVER_DB_DIR_PATH + filename;
 		}
 		List<String> lines = FileUtil.readAllLines(filepath);
 		cdl = new ChartDbLogic(code, filename, lines);
