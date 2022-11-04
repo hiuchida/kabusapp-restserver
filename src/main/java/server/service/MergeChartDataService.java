@@ -48,4 +48,18 @@ public class MergeChartDataService {
 		return "OK";
 	}
 
+	/**
+	 * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージした4本値と売買高を出力する。
+	 * 
+	 * @param code 銘柄コード。
+	 * @return レスポンス文字列。
+	 */
+	public String execute(String code) {
+		chartDbRepository.list();
+		chartDataRepository.list();
+		logger.info("execute(" + code + "):");
+		new MainMergeChartData_r17(chartDataRepository, chartDbRepository, mergeDataRepository, code).execute();
+		return "OK";
+	}
+
 }

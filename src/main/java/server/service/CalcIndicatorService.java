@@ -43,4 +43,17 @@ public class CalcIndicatorService {
 		return "OK";
 	}
 
+	/**
+	 * テクニカル指標を計算する。
+	 * 
+	 * @param code 銘柄コード。
+	 * @return レスポンス文字列。
+	 */
+	public String execute(String code) {
+		mergeDataRepository.list();
+		logger.info("execute(" + code + "):");
+		new MainCalcIndicator_r17(mergeDataRepository, indicatorDataRepository, code).execute();
+		return "OK";
+	}
+
 }

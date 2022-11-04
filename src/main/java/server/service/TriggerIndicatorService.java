@@ -43,4 +43,17 @@ public class TriggerIndicatorService {
 		return "OK";
 	}
 
+	/**
+	 * テクニカル指標からイベントトリガーを発火する。
+	 * 
+	 * @param code 銘柄コード。
+	 * @return レスポンス文字列。
+	 */
+	public String execute(String code) {
+		mergeDataRepository.list();
+		logger.info("execute(" + code + "):");
+		new MainTriggerIndicator_r17(mergeDataRepository, indicatorDataRepository, code).execute();
+		return "OK";
+	}
+
 }

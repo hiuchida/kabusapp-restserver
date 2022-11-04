@@ -39,4 +39,17 @@ public class TriggerTickService {
 		return "OK";
 	}
 
+	/**
+	 * ティックデータからイベントトリガーを発火する。
+	 * 
+	 * @param code 銘柄コード。
+	 * @return レスポンス文字列。
+	 */
+	public String execute(String code) {
+		chartDataRepository.list();
+		logger.info("execute(" + code + "):");
+		new MainTriggerTickData_r17(chartDataRepository, code).execute();
+		return "OK";
+	}
+
 }
