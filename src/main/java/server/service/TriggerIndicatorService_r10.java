@@ -30,7 +30,7 @@ public class TriggerIndicatorService_r10 {
 	private IndicatorDataRepository indicatorDataRepository;
 
 	/**
-	 * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージした4本値と売買高を出力する。
+	 * テクニカル指標からイベントトリガーを発火する。
 	 * 
 	 * @return レスポンス文字列。
 	 */
