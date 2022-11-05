@@ -26,11 +26,4 @@ public class ChartDataController {
 		return resp;
 	}
 
-	@PostMapping("/r1")
-	@ResponseBody
-	public String postChartData_r1(@RequestBody ChartData cd) {
-		String resp = chartDataService.register(cd);
-		return resp;
-	}
-
 }

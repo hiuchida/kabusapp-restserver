@@ -142,29 +142,6 @@ public class ChartDataRepository extends AppCommon {
 	}
 
 	/**
-	 * チャートデータをファイルに追記する。
-	 * 
-	 * @param cd チャートデータ。
-	 * @return 追記したレコード数。
-	 * @throws IOException 
-	 */
-	public synchronized int append(ChartData cd) throws IOException {
-		ChartDataLogic cdl = loadChartData(cd.code);
-		String dirpath = SERVER_CHART_DIR_PATH + cd.code;
-		FileUtil.mkdirs(dirpath);
-		String filepath = dirpath + "/" + CHART_CSV_FILENAME;
-		try (PrintWriter pw = FileUtil.writer(filepath, FileUtil.UTF8, true)) {
-			int writeCnt = 0;
-			for (String s : cd.list) {
-				cdl.append(s);
-				pw.println(s);
-				writeCnt++;
-			}
-			return writeCnt;
-		}
-	}
-
-	/**
 	 * チャートデータが存在しない場合のみファイルに追記する。
 	 * 
 	 * @param cd チャートデータ。

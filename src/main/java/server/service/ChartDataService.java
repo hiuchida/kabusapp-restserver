@@ -27,25 +27,6 @@ public class ChartDataService {
 	private ChartDataRepository chartDataRepository;
 
 	/**
-	 * チャートデータを登録する。
-	 * 
-	 * @param cd チャートデータ。
-	 * @return レスポンス文字列。
-	 */
-	public String register(ChartData cd) {
-		try {
-			int writeCnt = chartDataRepository.append(cd);
-			int totalCnt = chartDataRepository.count(cd.code);
-			logger.info("register(" + cd.code + "): writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
-			StdoutLog.timeprintln(clazz, "register(" + cd.code + ")", "writeCnt=" + writeCnt + ", totalCnt=" + totalCnt);
-			return "OK" + "-" + writeCnt + "/" + totalCnt;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "NG";
-		}
-	}
-
-	/**
 	 * チャートデータが存在しない場合のみ登録する。
 	 * 
 	 * @param cd チャートデータ。
