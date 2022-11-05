@@ -21,7 +21,7 @@ public class MainTestClient {
 
 	public static void main(String[] args) throws IOException {
 		ChartDataApi.execute();
-		ChartDbApi.execute();
+//		ChartDbApi.execute();
 	}
 
 	public static class ChartDataApi {
@@ -33,10 +33,10 @@ public class MainTestClient {
 		}
 
 		private static ChartData testData() {
-			ChartData cd = new ChartData("123");
-			cd.addRecord("a");
-			cd.addRecord("b");
-			cd.addRecord("c");
+			ChartData cd = new ChartData("167110019_F202211");
+			cd.addRecord("2022/11/05 05:54:16.839,2022-11-05 05:54:15,27515.0,19493.0");
+			cd.addRecord("2022/11/05 05:54:53.227,2022-11-05 05:54:53,27515.0,19505.0");
+			cd.addRecord("2022/11/05 06:00:00.874,2022-11-05 06:00:01,27505.0,19555.0");
 			return cd;
 		}
 
