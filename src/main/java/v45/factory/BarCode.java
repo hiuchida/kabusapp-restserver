@@ -1,4 +1,4 @@
-package v38.factory;
+package v45.factory;
 
 /**
  * 足名の種別コード。

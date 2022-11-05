@@ -15,8 +15,8 @@ import server.repository.IndicatorDataRepository;
 import util.AppCommon;
 import util.FileUtil;
 import util.StringUtil;
-import v38.factory.IndicatorCode;
-import v39.bean.EventInfo_r11;
+import v45.bean.EventInfo_r17;
+import v45.factory.IndicatorCode;
 import v45.i.TriggerIndicator_r17;
 
 /**
@@ -60,7 +60,7 @@ public abstract class TriggerIndicatorCommon_r17 extends AppCommon implements Tr
 	/**
 	 * イベントトリガー情報のリスト。
 	 */
-	protected List<EventInfo_r11> eventList = new ArrayList<>();
+	protected List<EventInfo_r17> eventList = new ArrayList<>();
 	/**
 	 * テクニカル指標のstdoutのファイル名。
 	 */
@@ -166,7 +166,7 @@ public abstract class TriggerIndicatorCommon_r17 extends AppCommon implements Tr
 	 * @param report レポート本文。
 	 */
 	protected void addEvent(String date, String type, String report) {
-		EventInfo_r11 event = new EventInfo_r11(name, bar, getCode().toString(), date, type, report);
+		EventInfo_r17 event = new EventInfo_r17(name, bar, getCode().toString(), date, type, report);
 		eventList.add(event);
 	}
 
@@ -177,7 +177,7 @@ public abstract class TriggerIndicatorCommon_r17 extends AppCommon implements Tr
 	 */
 	private void printEvent(PrintWriter pw) {
 		int writeCnt = 0;
-		for (EventInfo_r11 event : eventList) {
+		for (EventInfo_r17 event : eventList) {
 			pw.println(event.toLineString());
 			writeCnt++;
 		}

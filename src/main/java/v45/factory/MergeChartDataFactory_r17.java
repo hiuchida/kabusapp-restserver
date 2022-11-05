@@ -9,7 +9,6 @@ import java.util.Properties;
 import java.util.TreeMap;
 
 import util.AppCommon;
-import v38.factory.BarNameFactory_r10;
 import v45.i.MergeChartData_r17;
 
 /**
@@ -47,7 +46,7 @@ public class MergeChartDataFactory_r17 extends AppCommon {
 	 * クラスの初期化。
 	 */
 	static {
-		String[] barNames = BarNameFactory_r10.getBarNames();
+		String[] barNames = BarNameFactory_r17.getBarNames();
 		for (int i = 0; i < barNames.length; i++) {
 			String key = barNames[i];
 			String name = classNameMap.get(key);

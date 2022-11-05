@@ -1,4 +1,4 @@
-package v38.factory;
+package v45.factory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +12,7 @@ import util.StringUtil;
 /**
  * 足名の一覧のファクトリー。
  */
-public class BarNameFactory_r10 extends AppCommon {
+public class BarNameFactory_r17 extends AppCommon {
 	/**
 	 * 足名の一覧。
 	 */
@@ -23,7 +23,7 @@ public class BarNameFactory_r10 extends AppCommon {
 	 */
 	static {
 		try {
-			InputStream is = BarNameFactory_r10.class.getResourceAsStream("BarNameFactory_r10.properties");
+			InputStream is = BarNameFactory_r17.class.getResourceAsStream("BarNameFactory_r17.properties");
 			Properties prop = new Properties();
 			prop.load(is);
 			Map<Integer, String> map = new TreeMap<>();

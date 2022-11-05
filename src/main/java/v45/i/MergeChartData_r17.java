@@ -7,7 +7,7 @@ import bean.MergeChartInfo_r10;
 import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
 import server.repository.MergeDataRepository;
-import v38.factory.BarCode;
+import v45.factory.BarCode;
 
 /**
  * 保存した4本値チャートデータと、PUSH APIで受信したチャートデータをマージした4本値と売買高を出力するインターフェイス。

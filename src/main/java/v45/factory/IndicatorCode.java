@@ -1,4 +1,4 @@
-package v38.factory;
+package v45.factory;
 
 /**
  * テクニカル指標の種別コード。

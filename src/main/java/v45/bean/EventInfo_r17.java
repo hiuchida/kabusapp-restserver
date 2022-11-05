@@ -1,4 +1,4 @@
-package v39.bean;
+package v45.bean;
 
 import util.DateTimeUtil;
 import util.StringUtil;
@@ -6,7 +6,7 @@ import util.StringUtil;
 /**
  * イベントトリガー情報。
  */
-public class EventInfo_r11 implements Comparable<EventInfo_r11> {
+public class EventInfo_r17 implements Comparable<EventInfo_r17> {
 	/**
 	 * イベントトリガー情報のカラム数。
 	 */
@@ -54,7 +54,7 @@ public class EventInfo_r11 implements Comparable<EventInfo_r11> {
 	 * @param type      トリガー種別。
 	 * @param report    レポート本文。
 	 */
-	public EventInfo_r11(String name, String bar, String indicator, String date, String type, String report) {
+	public EventInfo_r17(String name, String bar, String indicator, String date, String type, String report) {
 		this.id = makeId(name, bar, indicator, date, type);
 		this.createDate = DateTimeUtil.nowToString();
 		this.name = name;
@@ -102,7 +102,7 @@ public class EventInfo_r11 implements Comparable<EventInfo_r11> {
 	}
 
 	@Override
-	public int compareTo(EventInfo_r11 that) {
+	public int compareTo(EventInfo_r17 that) {
 		return this.id.compareTo(that.id);
 	}
 

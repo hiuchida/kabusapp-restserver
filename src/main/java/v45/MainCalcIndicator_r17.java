@@ -6,7 +6,7 @@ import java.util.List;
 import server.repository.IndicatorDataRepository;
 import server.repository.MergeDataRepository;
 import util.AppCommon;
-import v38.factory.BarNameFactory_r10;
+import v45.factory.BarNameFactory_r17;
 
 /**
  * テクニカル指標を計算するクラス。
@@ -32,7 +32,7 @@ public class MainCalcIndicator_r17 extends AppCommon {
 	public MainCalcIndicator_r17(MergeDataRepository mergeDataRepository, IndicatorDataRepository indicatorDataRepository, String name) {
 		this.mergeDataRepository = mergeDataRepository;
 		this.indicatorDataRepository = indicatorDataRepository;
-		for (String bar : BarNameFactory_r10.getBarNames()) {
+		for (String bar : BarNameFactory_r17.getBarNames()) {
 			CalcCoordinator_r17 calc = new CalcCoordinator_r17(name, bar);
 			calcList.add(calc);
 		}

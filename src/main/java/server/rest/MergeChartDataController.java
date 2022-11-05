@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import server.service.MergeChartDataService;
-import server.service.MergeChartDataService_r10;
 
 @CrossOrigin
 @RestController
@@ -16,9 +15,6 @@ public class MergeChartDataController {
 
 	@Autowired
 	private MergeChartDataService mergeChartDataService;
-
-	@Autowired
-	private MergeChartDataService_r10 mergeChartDataService_r10;
 
 	@GetMapping("/merge")
 	@ResponseBody
@@ -31,13 +27,6 @@ public class MergeChartDataController {
 	@ResponseBody
 	public String mergeCode(@PathVariable String code) {
 		String resp = mergeChartDataService.execute(code);
-		return resp;
-	}
-
-	@GetMapping("/merge_r10")
-	@ResponseBody
-	public String merge_r10() {
-		String resp = mergeChartDataService_r10.execute();
 		return resp;
 	}
 

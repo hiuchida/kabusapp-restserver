@@ -5,7 +5,7 @@ import java.util.List;
 import bean.CalcIndicatorInfo_r10;
 import bean.MergeChartInfo_r10;
 import server.repository.IndicatorDataRepository;
-import v38.factory.IndicatorCode;
+import v45.factory.IndicatorCode;
 
 /**
  * テクニカル指標を計算するインターフェイス。

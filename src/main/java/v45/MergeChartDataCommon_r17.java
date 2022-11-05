@@ -19,7 +19,7 @@ import util.AppCommon;
 import util.DateTimeUtil;
 import util.DateUtil;
 import util.StringUtil;
-import v38.factory.BarCode;
+import v45.factory.BarCode;
 import v45.i.MergeChartData_r17;
 
 /**

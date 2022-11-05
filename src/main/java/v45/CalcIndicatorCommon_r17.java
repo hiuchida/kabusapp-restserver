@@ -11,7 +11,7 @@ import bean.CalcIndicatorInfo_r10;
 import bean.MergeChartInfo_r10;
 import server.repository.IndicatorDataRepository;
 import util.AppCommon;
-import v38.factory.IndicatorCode;
+import v45.factory.IndicatorCode;
 import v45.i.CalcIndicator_r17;
 
 /**

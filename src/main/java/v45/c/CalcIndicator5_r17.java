@@ -4,8 +4,8 @@ import java.util.List;
 
 import bean.CalcIndicatorInfo_r10;
 import bean.MergeChartInfo_r10;
-import v38.factory.IndicatorCode;
 import v45.CalcIndicatorCommon_r17;
+import v45.factory.IndicatorCode;
 import v45.i.CalcIndicator_r17;
 
 /**

@@ -13,7 +13,7 @@ import server.repository.ChartDataRepository;
 import util.AppCommon;
 import util.FileUtil;
 import util.StringUtil;
-import v39.bean.EventInfo_r11;
+import v45.bean.EventInfo_r17;
 
 /**
  * ティックデータからイベントトリガーを発火するクラス。
@@ -65,7 +65,7 @@ public class TriggerTickData_r17 extends AppCommon {
 	/**
 	 * イベントトリガー情報のリスト。
 	 */
-	private List<EventInfo_r11> eventList = new ArrayList<>();
+	private List<EventInfo_r17> eventList = new ArrayList<>();
 
 	/**
 	 * コンストラクタ。
@@ -166,7 +166,7 @@ public class TriggerTickData_r17 extends AppCommon {
 	 * @param report レポート本文。
 	 */
 	private void addEvent(String date, String type, String report) {
-		EventInfo_r11 event = new EventInfo_r11(name, TICK, TICK_CODE, date, type, report);
+		EventInfo_r17 event = new EventInfo_r17(name, TICK, TICK_CODE, date, type, report);
 		eventList.add(event);
 	}
 
@@ -177,7 +177,7 @@ public class TriggerTickData_r17 extends AppCommon {
 	 */
 	private void printEvent(PrintWriter pw) {
 		int writeCnt = 0;
-		for (EventInfo_r11 event : eventList) {
+		for (EventInfo_r17 event : eventList) {
 			pw.println(event.toLineString());
 			writeCnt++;
 		}

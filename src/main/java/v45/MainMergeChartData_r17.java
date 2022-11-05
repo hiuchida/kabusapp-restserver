@@ -8,7 +8,7 @@ import server.repository.ChartDataRepository;
 import server.repository.ChartDbRepository;
 import server.repository.MergeDataRepository;
 import util.AppCommon;
-import v38.factory.BarNameFactory_r10;
+import v45.factory.BarNameFactory_r17;
 import v45.factory.MergeChartDataFactory_r17;
 import v45.i.MergeChartData_r17;
 
@@ -49,7 +49,7 @@ public class MainMergeChartData_r17 extends AppCommon {
 	 */
 	public void execute() {
 		List<String> lines = null;
-		for (String key : BarNameFactory_r10.getBarNames()) {
+		for (String key : BarNameFactory_r17.getBarNames()) {
 			MergeChartData_r17 merge = mergeMap.get(key);
 			lines = merge.execute(chartDataRepository, chartDbRepository, mergeDataRepository, lines);
 		}
