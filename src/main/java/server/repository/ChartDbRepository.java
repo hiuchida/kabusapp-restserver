@@ -110,60 +110,42 @@ public class ChartDbRepository extends AppCommon {
 		if (bInit) {
 			return;
 		}
-		bInit = true;
-		{
-			ChartDbLogic cdl = loadChartDb("", CalendarLogic.DB_FILENAME);
-			List<String> lines = cdl.list();
-			CalendarLogic.initCalendar(lines);
-		}
-		List<String> dirs = FileUtil.listDirs(SERVER_DB_DIR_PATH);
-		logger.info("load(): " + dirs);
-		for (String code : dirs) {
-			List<String> files = FileUtil.listFiles(SERVER_DB_DIR_PATH + code);
-			logger.info("load(" + code + "): " + files);
-			for (String name : files) {
-				loadChartDb(code, name);
-			}
-		}
+		loadAll("load");
 	}
 
 	/**
 	 * すべてのファイルをリフレッシュする。
 	 */
 	public synchronized void refresh() {
-		bInit = true;
-		{
-			ChartDbLogic cdl = loadChartDb("", CalendarLogic.DB_FILENAME);
-			List<String> lines = cdl.list();
-			CalendarLogic.initCalendar(lines);
-		}
-		List<String> dirs = FileUtil.listDirs(SERVER_DB_DIR_PATH);
-		logger.info("refresh(): " + dirs);
-		for (String code : dirs) {
-			List<String> files = FileUtil.listFiles(SERVER_DB_DIR_PATH + code);
-			logger.info("refresh(" + code + "): " + files);
-			for (String name : files) {
-				loadChartDb(code, name);
-			}
-		}
+		loadAll("refresh");
 	}
 
 	/**
 	 * すべてのファイルをリロードする。
 	 */
 	public synchronized void reload() {
-		bInit = true;
 		chartMap.clear();
+		loadAll("reload");
+	}
+
+	/**
+	 * load(), refresh(), reload()の共通ロード。
+	 * 
+	 * @param method メソッド名。
+	 */
+	private synchronized void loadAll(String method) {
+		bInit = true;
+		FileUtil.mkdirs(SERVER_DB_DIR_PATH);
 		{
 			ChartDbLogic cdl = loadChartDb("", CalendarLogic.DB_FILENAME);
 			List<String> lines = cdl.list();
 			CalendarLogic.initCalendar(lines);
 		}
 		List<String> dirs = FileUtil.listDirs(SERVER_DB_DIR_PATH);
-		logger.info("reload(): " + dirs);
+		logger.info(method + "(): " + dirs);
 		for (String code : dirs) {
 			List<String> files = FileUtil.listFiles(SERVER_DB_DIR_PATH + code);
-			logger.info("reload(" + code + "): " + files);
+			logger.info(method + "(" + code + "): " + files);
 			for (String name : files) {
 				loadChartDb(code, name);
 			}

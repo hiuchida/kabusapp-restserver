@@ -108,34 +108,34 @@ public class ChartDataRepository extends AppCommon {
 		if (bInit) {
 			return;
 		}
-		bInit = true;
-		List<String> dirs = FileUtil.listDirs(SERVER_CHART_DIR_PATH);
-		logger.info("load(): " + dirs);
-		for (String code : dirs) {
-			loadChartData(code);
-		}
+		loadAll("load");
 	}
 
 	/**
 	 * すべてのファイルをリフレッシュする。
 	 */
 	public synchronized void refresh() {
-		bInit = true;
-		List<String> dirs = FileUtil.listDirs(SERVER_CHART_DIR_PATH);
-		logger.info("refresh(): " + dirs);
-		for (String code : dirs) {
-			loadChartData(code);
-		}
+		loadAll("refresh");
 	}
 
 	/**
 	 * すべてのファイルをリロードする。
 	 */
 	public synchronized void reload() {
-		bInit = true;
 		chartMap.clear();
+		loadAll("reload");
+	}
+
+	/**
+	 * load(), refresh(), reload()の共通ロード。
+	 * 
+	 * @param method メソッド名。
+	 */
+	private synchronized void loadAll(String method) {
+		bInit = true;
+		FileUtil.mkdirs(SERVER_CHART_DIR_PATH);
 		List<String> dirs = FileUtil.listDirs(SERVER_CHART_DIR_PATH);
-		logger.info("reload(): " + dirs);
+		logger.info(method + "(): " + dirs);
 		for (String code : dirs) {
 			loadChartData(code);
 		}
