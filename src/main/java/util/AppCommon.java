@@ -66,11 +66,6 @@ public abstract class AppCommon {
 	public static final String CHART_LOCK_FILENAME = "ChartData.lock";
 
 	/**
-	 * 注文パスワード。
-	 */
-//	public static final String TRADE_PASSWORD = SendOrderConfigUtil.getPassword();
-
-	/**
 	 * main()の冒頭の初期化。
 	 * 
 	 * @param clazz アプリのクラス。
